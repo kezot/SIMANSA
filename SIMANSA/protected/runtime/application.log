@@ -314,3 +314,48 @@ Stack trace:
 #34 {main}
 REQUEST_URI=/SIMANSA/index.php?r=siswa
 ---
+2014/04/20 11:52:02 [error] [php] Undefined variable: dataProvider (C:\xampp\htdocs\SIMANSA\protected\views\siswaAbsensi\index.php:18)
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(869): SiswaAbsensiController->renderFile()
+#1 C:\xampp\htdocs\yii\framework\web\CController.php(782): SiswaAbsensiController->renderPartial()
+#2 C:\xampp\htdocs\SIMANSA\protected\controllers\SiswaAbsensiController.php(9): SiswaAbsensiController->render()
+#3 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiswaAbsensiController->actionIndex()
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(286): SiswaAbsensiController->runAction()
+#6 C:\xampp\htdocs\yii\framework\web\CController.php(265): SiswaAbsensiController->runActionWithFilters()
+#7 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiswaAbsensiController->run()
+#8 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 C:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 C:\xampp\htdocs\SIMANSA\index.php(13): CWebApplication->run()
+REQUEST_URI=/SIMANSA/index.php?r=siswaAbsensi
+in C:\xampp\htdocs\SIMANSA\protected\views\siswaAbsensi\index.php (18)
+in C:\xampp\htdocs\SIMANSA\protected\controllers\SiswaAbsensiController.php (9)
+in C:\xampp\htdocs\SIMANSA\index.php (13)
+2014/04/20 11:54:46 [error] [php] Undefined variable: dataProvider (C:\xampp\htdocs\SIMANSA\protected\views\siswaAbsensi\index.php:18)
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(869): SiswaAbsensiController->renderFile()
+#1 C:\xampp\htdocs\yii\framework\web\CController.php(782): SiswaAbsensiController->renderPartial()
+#2 C:\xampp\htdocs\SIMANSA\protected\controllers\SiswaAbsensiController.php(9): SiswaAbsensiController->render()
+#3 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiswaAbsensiController->actionIndex()
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(286): SiswaAbsensiController->runAction()
+#6 C:\xampp\htdocs\yii\framework\web\CController.php(265): SiswaAbsensiController->runActionWithFilters()
+#7 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiswaAbsensiController->run()
+#8 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 C:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#10 C:\xampp\htdocs\SIMANSA\index.php(13): CWebApplication->run()
+REQUEST_URI=/SIMANSA/index.php?r=siswaAbsensi
+in C:\xampp\htdocs\SIMANSA\protected\views\siswaAbsensi\index.php (18)
+in C:\xampp\htdocs\SIMANSA\protected\controllers\SiswaAbsensiController.php (9)
+in C:\xampp\htdocs\SIMANSA\index.php (13)
+2014/04/20 11:56:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "create".' in C:\xampp\htdocs\yii\framework\web\CController.php:483
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(270): CController->missingAction('create')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('create')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('siswaAbsensi/cr...')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\SIMANSA\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/SIMANSA/index.php?r=siswaAbsensi/create
+HTTP_REFERER=http://localhost/SIMANSA/index.php?r=siswaAbsensi
+---

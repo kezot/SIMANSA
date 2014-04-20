@@ -6,7 +6,7 @@ class SiswaAbsensiController extends Controller {
     
     public function actionIndex() {
         $dataProvider=new CActiveDataProvider('SiswaAbsensi');
-        $this->render('index', array('dataprovider'=>$dataProvider));
+        $this->render('index', array('dataProvider'=>$dataProvider));
     }
     
 
