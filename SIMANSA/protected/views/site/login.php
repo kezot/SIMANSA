@@ -4,9 +4,10 @@
 /* @var $form CActiveForm  */
 
 $this->pageTitle = Yii::app()->name . ' - Login';
+/*
 $this->breadcrumbs = array(
     'Login',
-);
+);*/
 ?>
 <div class="form">
     <?php
@@ -30,7 +31,7 @@ $this->breadcrumbs = array(
                     SIMANSA merupakan Sistem Informasi SMA Negeri 1 Depok yang berfungsi sebagai sarana penghubung antara sekolah, siswa, dan orang tua.
                 </p>
                 <p>
-                    <a class="btn" href="#">View details Â»</a>
+                    
                 </p>
             </div>
             

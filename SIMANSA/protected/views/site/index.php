@@ -16,9 +16,10 @@ $this->pageTitle=Yii::app()->name;
 			<h3 class="text-center text-info">
 				Pengumuman Akademis
 			</h3>
-			<div class="media">
+			<!--div class="media">
 				 <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=""></a>
 				<div class="media-body">
+                                   
 					<h4 class="media-heading">
 						Nested media heading
 					</h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
@@ -31,7 +32,7 @@ $this->pageTitle=Yii::app()->name;
 						</div>
 					</div>
 				</div>
-			</div>
+			</div-->
 			<ul class="pagination">
 				<li>
 					<a href="#">Prev</a>
