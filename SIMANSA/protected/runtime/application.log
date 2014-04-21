@@ -359,6 +359,7 @@ Stack trace:
 REQUEST_URI=/SIMANSA/index.php?r=siswaAbsensi/create
 HTTP_REFERER=http://localhost/SIMANSA/index.php?r=siswaAbsensi
 ---
+<<<<<<< HEAD
 2014/04/21 04:03:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "PembayaranSiswa".' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
 Stack trace:
 #0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('PembayaranSiswa')
@@ -423,3 +424,5 @@ Stack trace:
 REQUEST_URI=/SIMANSA/index.php?r=siswaAbsensi/create
 HTTP_REFERER=http://localhost/SIMANSA/index.php?r=siswaAbsensi
 ---
+=======
+>>>>>>> d487b9dc699bcf56014c87e081200d6b40a20cda
