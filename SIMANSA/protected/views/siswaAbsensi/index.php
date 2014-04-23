@@ -41,10 +41,10 @@ $this->breadcrumbs = array(
             <thead>
                 <tr>
                     <th>
-                        #
+                        NIS
                     </th>
                     <th>
-                        Kelas
+                        Nama Siswa
                     </th>
 
                 </tr>
@@ -52,10 +52,10 @@ $this->breadcrumbs = array(
             <tbody>
                 <tr>
                     <td>
-                        1
+                        1105087881
                     </td>
                     <td>
-                        X -1
+                        Mario Joel
                     </td>
                 </tr>
             </tbody>

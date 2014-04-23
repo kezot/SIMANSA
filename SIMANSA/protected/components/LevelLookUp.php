@@ -57,7 +57,7 @@ class LevelLookUp {
             self::ORANGTUA => 'Orang Tua',
             self::WALIKELAS => 'Wali Kelas',
             self::ADMIN => 'Administrator',
-            self::SUPERUSER => 'Super User'
+            self::SUPERUSER => 'Super User',
         );
     }
 

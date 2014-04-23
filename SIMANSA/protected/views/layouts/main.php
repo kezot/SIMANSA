@@ -61,21 +61,9 @@
             <div class="row clearfix">
 		<div class="col-md-12 column">
                     <div class="page-header">
-                    
-                        <?php
-                        if(!Yii::app()->user->isGuest){
-                            echo '
-				<h1>
+                        	<h1>
 					SIMANSA <small>Sistem Informasi SMA Negeri 1 Depok</small>
-				</h1>';
-                        } else {
-                            $basisUrl = Yii::app()->request->baseUrl;
-                            echo '<img src="'.$basisUrl.'/images/SMAN1Depok.jpg"></img>"';
-                        }
-                                
-			
-                        ?>
-                        
+				</h1>';                        
                         </div>
                         
 		</div>
