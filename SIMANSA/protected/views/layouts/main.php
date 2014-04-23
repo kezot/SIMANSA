@@ -60,11 +60,24 @@
             
             <div class="row clearfix">
 		<div class="col-md-12 column">
-			<div class="page-header">
+                    <div class="page-header">
+                    
+                        <?php
+                        if(!Yii::app()->user->isGuest){
+                            echo '
 				<h1>
 					SIMANSA <small>Sistem Informasi SMA Negeri 1 Depok</small>
-				</h1>
-			</div>
+				</h1>';
+                        } else {
+                            $basisUrl = Yii::app()->request->baseUrl;
+                            echo '<img src="'.$basisUrl.'/images/SMAN1Depok.jpg"></img>"';
+                        }
+                                
+			
+                        ?>
+                        
+                        </div>
+                        
 		</div>
 	</div>
             <div id="mainmenu" >
@@ -74,11 +87,11 @@
                         array('label' => 'Home', 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
                         /*array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
                         array('label' => 'Contact', 'url' => array('/site/contact')),*/
-                        array('label' => "Siswa", 'url' =>array('/siswa'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => "Siswa Absensi", 'url' =>array('/tSiswaAbsensi'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => "Pembayaran Siswa", 'url' =>array('/rPembayaranSiswa'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => "Nilai Rapor Siswa", 'url' =>array('/tNilaiRapor'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => "Siswa", 'url' =>array('/siswa'), 'visible' => Yii::app()->user->isAdmin()),
+                        array('label' => "Absensi Siswa", 'url' =>array('/tSiswaAbsensi'), 'visible' => Yii::app()->user->isPiket()),
+                        array('label' => "Pembayaran Siswa", 'url' =>array('/rPembayaranSiswa'), 'visible' => Yii::app()->user->isTU()),
+                        array('label' => "Nilai Rapor Siswa", 'url' =>array('/tNilaiRapor'), 'visible' => Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()),
+                        /*array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),*/
                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
                 ));
@@ -145,7 +158,7 @@
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> by SMA Negeri 1 Depok.<br/>
                 All Rights Reserved.<br/>
                 <?php echo Yii::powered(); ?>
             </div><!-- footer -->

@@ -1,7 +1,7 @@
 <!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
 $this->breadcrumbs=array(
-	'TSiswaAbsensis',
+	'Absensi Siswa',
 );
 
 $this->menu=array(
