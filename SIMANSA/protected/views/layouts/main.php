@@ -69,21 +69,21 @@
                 </div>
             </div>
             <!--div id="mainmenu" >
-                <!--?php
-                $this->widget('zii.widgets.CMenu', array(
-                    'items' => array(
-                        array('label' => 'Home', 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
-                        /*array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
-                        array('label' => 'Contact', 'url' => array('/site/contact')),*/
-                        array('label' => "Siswa", 'url' =>array('/siswa'), 'visible' => Yii::app()->user->isAdmin()),
-                        array('label' => "Absensi Siswa", 'url' =>array('/tSiswaAbsensi'), 'visible' => Yii::app()->user->isPiket()),
-                        array('label' => "Pembayaran Siswa", 'url' =>array('/rPembayaranSiswa'), 'visible' => Yii::app()->user->isTU()),
-                        array('label' => "Nilai Rapor Siswa", 'url' =>array('/tNilaiRapor'), 'visible' => Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()),
-                        /*array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),*/
-                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
-                    ),
-                ));
-                ?-->
+            <!--?php
+            $this->widget('zii.widgets.CMenu', array(
+                'items' => array(
+                    array('label' => 'Home', 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
+                    /*array('label' => 'About', 'url' => array('/site/page', 'view' => 'about')),
+                    array('label' => 'Contact', 'url' => array('/site/contact')),*/
+                    array('label' => "Siswa", 'url' =>array('/siswa'), 'visible' => Yii::app()->user->isAdmin()),
+                    array('label' => "Absensi Siswa", 'url' =>array('/tSiswaAbsensi'), 'visible' => Yii::app()->user->isPiket()),
+                    array('label' => "Pembayaran Siswa", 'url' =>array('/rPembayaranSiswa'), 'visible' => Yii::app()->user->isTU()),
+                    array('label' => "Nilai Rapor Siswa", 'url' =>array('/tNilaiRapor'), 'visible' => Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()),
+                    /*array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),*/
+                    array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
+                ),
+            ));
+            ?-->
 
             <!--/div--><!-- mainmenu -->
 
@@ -93,49 +93,58 @@
                         <?php
                         //<li class="active">
                         if (!Yii::app()->user->isGuest) {
-                            echo '<li>
-					<a href="' . Yii::app()->request->baseUrl . '/index.php?">Home</a>
-                                            </li>';
+                            if (Yii::app()->controller->id == 'SiteController') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?">Home</a>
+                                </li>';
                         }
 
                         /* <li>
                           <a href="#">Profil</a>
                           </li> */
                         if (Yii::app()->user->isTU()) {
-                            echo '<li>
-					<a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Pembayaran</a>
+                            if (Yii::app()->controller->id == 'RPembayaranSiswa') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Pembayaran</a>
                                         </li>';
                         }
-                        if(Yii::app()->user->isPiket()){
-                            echo '<li>
-                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaAbsensi">Absensi</a>
+                        if (Yii::app()->user->isPiket()) {
+                            if (Yii::app()->controller->id == 'TSiswaAbsensi') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaAbsensi">Absensi</a>
                           </li>';
                         }
-                        
-                        if(Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()){
+
+                        if (Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()) {
                             echo '<li>
                           <a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Penilaian</a>
                           </li>';
                         }
-                                                   
+
                         /* <li>
                           <a href="#">Jadwal</a>
                           </li> */
                         /*
                           <li>
                           <a href="#">Akun</a>
-                          </li> */ 
-                        
-                         
-                        if(!Yii::app()->user->isGuest){
-                            echo  ' <li class="dropdown pull-right">
-                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=site/logout" data-toggle="dropdown" class="dropdown-toggle">Logout<strong class="caret"></strong></a>
-                          <ul class="dropdown-menu">
-                          <li>
-                          <a href="#">Action</a>
-                          </ul>
-                        </li> '; }
-                       
+                          </li> */
+
+
+                        if (!Yii::app()->user->isGuest) {
+                            echo ' <li class="pull-right">
+                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=site/logout" data-toggle="dropdown" class="dropdown-toggle">Logout</a>
+                          
+                        </li> ';
+                        }
                         ?>
                     </ul>
                 </div>

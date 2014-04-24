@@ -88,13 +88,6 @@ $this->pageTitle = Yii::app()->name . ' - Login';
                             <?php echo $form->error($model, 'password'); ?>
                         </div>
                         <div class="form-group">
-
-                            <?php echo $form->checkBox($model, 'rememberMe'); ?>
-                            <?php echo $form->label($model, 'rememberMe'); ?>
-                            <?php echo $form->error($model, 'rememberMe'); ?>
-
-                        </div>
-                        <div class="form-group">
                             <?php echo CHtml::submitButton('Login'); ?>
                         </div>
                         <div class="col-md-4 column">
