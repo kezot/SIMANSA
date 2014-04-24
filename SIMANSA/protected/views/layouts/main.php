@@ -9,8 +9,8 @@
         <meta name="author" content=""/>
 
         <!-- blueprint CSS framework -->
-        <!--link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-        <!--link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
         <!--[if lt IE 8]>
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
         <![endif]-->
@@ -22,9 +22,9 @@
 
 
 
-        <!--link rel="stylesheet/less" href="<?php echo Yii::app()->request->baseUrl; ?>/less/bootstrap.less" type="text/css" /-->
-        <!--link rel="stylesheet/less" href="<?php echo Yii::app()->request->baseUrl; ?>/less/responsive.less" type="text/css" /-->
-        <!--script src="js/less-1.3.3.min.js"></script-->
+        <link rel="stylesheet/less" href="<?php echo Yii::app()->request->baseUrl; ?>/less/bootstrap.less" type="text/css" />
+        <link rel="stylesheet/less" href="<?php echo Yii::app()->request->baseUrl; ?>/less/responsive.less" type="text/css" />
+        <script src="js/less-1.3.3.min.js"></script>
         <!--append â€˜#!watchâ€™ to the browser URL, then refresh the page. -->
 
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css" rel="stylesheet"/>
@@ -56,20 +56,20 @@
                 <div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
             </div><!-- header -->
 
-            
-            
+
+
             <div class="row clearfix">
-		<div class="col-md-12 column">
+                <div class="col-md-12 column">
                     <div class="page-header">
-                        	<h1>
-					SIMANSA <small>Sistem Informasi SMA Negeri 1 Depok</small>
-				</h1>';                        
-                        </div>
-                        
-		</div>
-	</div>
-            <div id="mainmenu" >
-                <?php
+                        <h1>
+                            SIMANSA <small>Sistem Informasi SMA Negeri 1 Depok</small>
+                        </h1>';                        
+                    </div>
+
+                </div>
+            </div>
+            <!--div id="mainmenu" >
+                <!--?php
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
                         array('label' => 'Home', 'url' => array('/site/index'), 'visible' => !Yii::app()->user->isGuest),
@@ -83,56 +83,64 @@
                         array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)
                     ),
                 ));
-                ?>
-                    
-            </div><!-- mainmenu -->
-	<!--div class="row clearfix">
-		<div class="col-md-12 column">
-			<ul class="nav nav-pills">
-				<li class="active">
-					<a href="#">Home</a>
-				</li>
-				<li>
-					<a href="#">Profil</a>
-				</li>
-				<li>
-					<a href="#">Pembayaran</a>
-				</li>
-				<li>
-					<a href="#">Absensi</a>
-				</li>
-				<li>
-					<a href="#">Penilaian</a>
-				</li>
-				<li>
-					<a href="#">Jadwal</a>
-				</li>
-				<li>
-					<a href="#">Akun</a>
-				</li>
-				<li class="dropdown pull-right">
-					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Logout<strong class="caret"></strong></a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="#">Action</a>
-						</li>
-						<li>
-							<a href="#">Another action</a>
-						</li>
-						<li>
-							<a href="#">Something else here</a>
-						</li>
-						<li class="divider">
-						</li>
-						<li>
-							<a href="#">Separated link</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div-->
-            
+                ?-->
+
+            <!--/div--><!-- mainmenu -->
+
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <ul class="nav nav-pills">
+                        <?php
+                        //<li class="active">
+                        if (!Yii::app()->user->isGuest) {
+                            echo '<li>
+					<a href="' . Yii::app()->request->baseUrl . '/index.php?">Home</a>
+                                            </li>';
+                        }
+
+                        /* <li>
+                          <a href="#">Profil</a>
+                          </li> */
+                        if (Yii::app()->user->isTU()) {
+                            echo '<li>
+					<a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Pembayaran</a>
+                                        </li>';
+                        }
+                        if(Yii::app()->user->isPiket()){
+                            echo '<li>
+                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaAbsensi">Absensi</a>
+                          </li>';
+                        }
+                        
+                        if(Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()){
+                            echo '<li>
+                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Penilaian</a>
+                          </li>';
+                        }
+                                                   
+                        /* <li>
+                          <a href="#">Jadwal</a>
+                          </li> */
+                        /*
+                          <li>
+                          <a href="#">Akun</a>
+                          </li> */ 
+                        
+                         
+                        if(!Yii::app()->user->isGuest){
+                            echo  ' <li class="dropdown pull-right">
+                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=site/logout" data-toggle="dropdown" class="dropdown-toggle">Logout<strong class="caret"></strong></a>
+                          <ul class="dropdown-menu">
+                          <li>
+                          <a href="#">Action</a>
+                          </ul>
+                        </li> '; }
+                       
+                        ?>
+                    </ul>
+                </div>
+            </div>
+
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('zii.widgets.CBreadcrumbs', array(
@@ -155,3 +163,4 @@
 
     </body>
 </html>
+

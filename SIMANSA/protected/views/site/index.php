@@ -8,7 +8,7 @@ $this->pageTitle = Yii::app()->name;
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="row clearfix">
-                <div class="col-md-4 column">
+                <div class="col-md-5 column">
                     <h3 class="text-center text-info">
                         Kalender Akademik
                     </h3>
@@ -86,7 +86,7 @@ $this->pageTitle = Yii::app()->name;
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-2 column">
                     <h3 class="text-center text-info">
                         Profil Akun
                     </h3><img alt="140x140" src="http://lorempixel.com/140/140/">
