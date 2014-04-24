@@ -7,7 +7,8 @@ class SiswaController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-
+        public $id = 'siswa';
+        
 	/**
 	 * @return array action filters
 	 */

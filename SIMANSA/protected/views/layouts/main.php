@@ -93,20 +93,21 @@
                         <?php
                         //<li class="active">
                         if (!Yii::app()->user->isGuest) {
-                            if (Yii::app()->controller->id == 'SiteController') {
+                            if (Yii::app()->controller->id == 'home') {
                                 echo '<li class="active">';
                             } else {
                                 echo '<li>';
                             }
                             echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?">Home</a>
                                 </li>';
+                            
                         }
 
                         /* <li>
                           <a href="#">Profil</a>
                           </li> */
                         if (Yii::app()->user->isTU()) {
-                            if (Yii::app()->controller->id == 'RPembayaranSiswa') {
+                            if (Yii::app()->controller->id == 'pembayaransiswa') {
                                 echo '<li class="active">';
                             } else {
                                 echo '<li>';
@@ -115,7 +116,7 @@
                                         </li>';
                         }
                         if (Yii::app()->user->isPiket()) {
-                            if (Yii::app()->controller->id == 'TSiswaAbsensi') {
+                            if (Yii::app()->controller->id == 'absensi') {
                                 echo '<li class="active">';
                             } else {
                                 echo '<li>';
@@ -125,8 +126,12 @@
                         }
 
                         if (Yii::app()->user->isGuru() || Yii::app()->user->isWaliKelas()) {
-                            echo '<li>
-                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Penilaian</a>
+                           if (Yii::app()->controller->id == 'nilairapor') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tNilaiRapor">Penilaian</a>
                           </li>';
                         }
 

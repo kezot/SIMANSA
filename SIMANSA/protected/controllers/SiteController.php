@@ -5,9 +5,9 @@ class SiteController extends Controller
 	/**
 	 * Declares class-based actions.
 	 */
+        public $id = 'home';
     
         public $layout='//layouts/column1';
-        public $id = 'home';
 	public function actions()
 	{
 		return array(

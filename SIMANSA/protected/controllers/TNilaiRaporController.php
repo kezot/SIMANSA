@@ -2,7 +2,8 @@
 class TNilaiRaporController extends Controller
 {
 	public $layout='//layouts/column2';
-	
+	public $id = 'nilairapor';
+        
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('TNilaiRapor');
