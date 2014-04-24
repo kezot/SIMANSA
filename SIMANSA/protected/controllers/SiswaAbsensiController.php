@@ -9,6 +9,14 @@ class SiswaAbsensiController extends Controller {
         $this->render('index', array('dataProvider'=>$dataProvider));
     }
     
+    public function Form() {
+        
+    }
+    
+    public function showClass() {
+    }
+    
+    
 
     // Uncomment the following methods and override them if needed
     /*

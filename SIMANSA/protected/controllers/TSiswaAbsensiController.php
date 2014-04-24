@@ -3,7 +3,7 @@
 class TSiswaAbsensiController extends Controller
 {
 	public $layout='//layouts/column2';
-	
+	public $id = 'absensi';
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('TSiswaAbsensi');

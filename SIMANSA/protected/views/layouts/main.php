@@ -146,7 +146,7 @@
 
                         if (!Yii::app()->user->isGuest) {
                             echo ' <li class="pull-right">
-                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=site/logout" data-toggle="dropdown" class="dropdown-toggle">Logout</a>
+                          <a href="' . Yii::app()->request->baseUrl . '/index.php?r=site/logout" >Logout</a>
                           
                         </li> ';
                         }
