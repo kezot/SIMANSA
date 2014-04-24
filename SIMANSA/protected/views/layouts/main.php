@@ -63,7 +63,7 @@
                     <div class="page-header">
                         <h1>
                             SIMANSA <small>Sistem Informasi SMA Negeri 1 Depok</small>
-                        </h1>';                        
+                        </h1>                        
                     </div>
 
                 </div>

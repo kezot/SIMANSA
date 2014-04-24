@@ -77,6 +77,7 @@ $this->pageTitle = Yii::app()->name . ' - Login';
                     <div class="col-md-4 column">
                     </div>
                     <div class="col-md-4 column">
+                        <div class ="form">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'username'); ?>
                             <?php echo $form->textField($model, 'username'); ?>
@@ -90,6 +91,7 @@ $this->pageTitle = Yii::app()->name . ' - Login';
                         <div class="form-group">
                             <?php echo CHtml::submitButton('Login'); ?>
                         </div>
+                    </div>
                         <div class="col-md-4 column">
                         </div>
                     </div>
