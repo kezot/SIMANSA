@@ -4,7 +4,7 @@
 $this->breadcrumbs=array(
 	'R Pembayaran Siswa',
 );
-<<<<<<< HEAD
+
 $this->menu=array(
 	array('label'=>'Create Pembayaran Siswa', 'url'=>array('create')),
 	array('label'=>'Manage Pembayaran Siswa', 'url'=>array('admin')),

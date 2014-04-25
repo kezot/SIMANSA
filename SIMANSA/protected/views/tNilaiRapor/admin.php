@@ -1,13 +1,13 @@
 <!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
 $this->breadcrumbs=array(
-	'TNilairapors'=>array('index'),
+	'TNilaiRapors'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List TNilairapors', 'url'=>array('index')),
-	array('label'=>'Create TNilairapor', 'url'=>array('create')),
+	array('label'=>'List TNilaiRapors', 'url'=>array('index')),
+	array('label'=>'Create TNilaiRapor', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,7 +24,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage TNilairapors</h1>
+<h1>Manage TNilaiRapors</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -67,21 +67,21 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 (
                     'url'=>
                     'Yii::app()->createUrl("tNilaiRapor/view/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJAR"=>$data->KD_PROGRAM_PENGAJAR, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
 											))',
                 ),
                 'update' => array
                 (
                     'url'=>
                     'Yii::app()->createUrl("tNilaiRapor/update/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJAR"=>$data->KD_PROGRAM_PENGAJAR, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
 											))',
                 ),
                 'delete'=> array
                 (
                     'url'=>
                     'Yii::app()->createUrl("tNilaiRapor/delete/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJAR"=>$data->KD_PROGRAM_PENGAJAR, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "KD_PERIODE_BELAJAR"=>$data->KD_PERIODE_BELAJAR
 											))',
                 ),
             ),

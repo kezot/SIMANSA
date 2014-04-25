@@ -2,7 +2,7 @@
 <div class="view">
 	<b>
 	<?php echo CHtml::link(">> ", array('view', 
-	'NIS'=>$data->NIS, 'KD_TAHUN_AJARAN'=>$data->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$data->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJAR'=>$data->KD_PROGRAM_PENGAJAR, 'KD_ROMBEL'=>$data->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$data->KD_PERIODE_BELAJAR)); ?><br/></b>
+	'NIS'=>$data->NIS, 'KD_TAHUN_AJARAN'=>$data->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$data->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$data->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$data->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$data->KD_PERIODE_BELAJAR)); ?><br/></b>
 	
 	
     <b><?php echo CHtml::encode($data->getAttributeLabel('NIS')); ?>:</b>

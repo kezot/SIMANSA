@@ -1,13 +1,13 @@
 <!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
 <?php
 $this->breadcrumbs=array(
-	'TSiswaAbsensis'=>array('index'),
+	'TSiswaBayars'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List TSiswaAbsensis', 'url'=>array('index')),
-	array('label'=>'Create TSiswaAbsensi', 'url'=>array('create')),
+	array('label'=>'List TSiswaBayars', 'url'=>array('index')),
+	array('label'=>'Create TSiswaBayar', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -16,7 +16,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('tSiswaAbsensigrid', {
+	$.fn.yiiGridView.update('tSiswaBayargrid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -24,7 +24,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage TSiswaAbsensis</h1>
+<h1>Manage TSiswaBayars</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -40,7 +40,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id'=>'tSiswaAbsensigrid',
+    'id'=>'tSiswaBayargrid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
     'columns'=>array(
@@ -49,9 +49,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'KD_TINGKAT_KELAS',
         'KD_PROGRAM_PENGAJARAN',
         'KD_ROMBEL',
-        'TANGGAL',
-        'KD_PERIODE_BELAJAR',
-        'STATUS_ABSEN',
+        'ID_PEMBAYARAN_SISWA',
+        'TANGGAL_BAYAR',
+        'JUMLAH_BAYAR',
         'KETERANGAN',
         'USERNAME',
         'TANGGAL_AKSES',
@@ -63,22 +63,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'view' => array
                 (
                     'url'=>
-                    'Yii::app()->createUrl("tSiswaAbsensi/view/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "TANGGAL"=>$data->TANGGAL
+                    'Yii::app()->createUrl("tSiswaBayar/view/", 
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "ID_PEMBAYARAN_SISWA"=>$data->ID_PEMBAYARAN_SISWA, "TANGGAL_BAYAR"=>$data->TANGGAL_BAYAR
 											))',
                 ),
                 'update' => array
                 (
                     'url'=>
-                    'Yii::app()->createUrl("tSiswaAbsensi/update/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "TANGGAL"=>$data->TANGGAL
+                    'Yii::app()->createUrl("tSiswaBayar/update/", 
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "ID_PEMBAYARAN_SISWA"=>$data->ID_PEMBAYARAN_SISWA, "TANGGAL_BAYAR"=>$data->TANGGAL_BAYAR
 											))',
                 ),
                 'delete'=> array
                 (
                     'url'=>
-                    'Yii::app()->createUrl("tSiswaAbsensi/delete/", 
-                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "TANGGAL"=>$data->TANGGAL
+                    'Yii::app()->createUrl("tSiswaBayar/delete/", 
+                                            array("NIS"=>$data->NIS, "KD_TAHUN_AJARAN"=>$data->KD_TAHUN_AJARAN, "KD_TINGKAT_KELAS"=>$data->KD_TINGKAT_KELAS, "KD_PROGRAM_PENGAJARAN"=>$data->KD_PROGRAM_PENGAJARAN, "KD_ROMBEL"=>$data->KD_ROMBEL, "ID_PEMBAYARAN_SISWA"=>$data->ID_PEMBAYARAN_SISWA, "TANGGAL_BAYAR"=>$data->TANGGAL_BAYAR
 											))',
                 ),
             ),

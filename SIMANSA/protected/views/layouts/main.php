@@ -112,7 +112,7 @@
                             } else {
                                 echo '<li>';
                             }
-                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=rPembayaranSiswa">Pembayaran</a>
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaBayar">Pembayaran</a>
                                         </li>';
                         }
                         if (Yii::app()->user->isPiket()) {
@@ -132,6 +132,16 @@
                                 echo '<li>';
                             }
                             echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tNilaiRapor">Penilaian</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isAdmin()) {
+                           if (Yii::app()->controller->id == 'user') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=user">Akun</a>
                           </li>';
                         }
 

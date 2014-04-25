@@ -1,13 +1,13 @@
 
 <?php
-class TSiswaAbsensiController extends Controller
+class TSiswaBayarController extends Controller
 {
 	public $layout='//layouts/column2';
-	public $id = 'absensi';
-        
+	
+        public $id = 'pembayaransiswa';
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TSiswaAbsensi');
+		$dataProvider=new CActiveDataProvider('TSiswaBayar');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -36,7 +36,7 @@ class TSiswaAbsensiController extends Controller
 
 	public function actionCreate()
 	{
-	    $model=new TSiswaAbsensi;
+	    $model=new TSiswaBayar;
 
 	    if(isset($_POST['ajax']) && $_POST['ajax']==='client-account-create-form')
 	    {
@@ -44,26 +44,26 @@ class TSiswaAbsensiController extends Controller
 	        Yii::app()->end();
 	    }
 
-	    if(isset($_POST['TSiswaAbsensi']))
+	    if(isset($_POST['TSiswaBayar']))
 	    {
-	        $model->attributes=$_POST['TSiswaAbsensi'];
+	        $model->attributes=$_POST['TSiswaBayar'];
 	        if($model->validate())
 	        {
 				$this->saveModel($model);
-				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL));
+				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA'=>$model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR'=>$model->TANGGAL_BAYAR));
 	        }
 	    }
 	    $this->render('create',array('model'=>$model));
 	} 
 	
-	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
+	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			try
 			{
 				// we only allow deletion via POST request
-				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)->delete();
+				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)->delete();
 			}
 			catch(Exception $e) 
 			{
@@ -78,19 +78,19 @@ class TSiswaAbsensiController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
-	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
+	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)
 	{
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL);
+		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['TSiswaAbsensi']))
+		if(isset($_POST['TSiswaBayar']))
 		{
-			$model->attributes=$_POST['TSiswaAbsensi'];
+			$model->attributes=$_POST['TSiswaBayar'];
 			$this->saveModel($model);
 			$this->redirect(array('view',
-	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL));
+	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA'=>$model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR'=>$model->TANGGAL_BAYAR));
 		}
 
 		$this->render('update',array(
@@ -100,25 +100,25 @@ class TSiswaAbsensiController extends Controller
 	
 	public function actionAdmin()
 	{
-		$model=new TSiswaAbsensi('search');
+		$model=new TSiswaBayar('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['TSiswaAbsensi']))
-			$model->attributes=$_GET['TSiswaAbsensi'];
+		if(isset($_GET['TSiswaBayar']))
+			$model->attributes=$_GET['TSiswaBayar'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
 	}
 	
-	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
+	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)
 	{		
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL);
+		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR);
 		$this->render('view',array('model'=>$model));
 	}
 	
-	public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
+	public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)
 	{
-		$model=TSiswaAbsensi::model()->findByPk(array('NIS'=>$NIS, 'KD_TAHUN_AJARAN'=>$KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$KD_ROMBEL, 'TANGGAL'=>$TANGGAL));
+		$model=TSiswaBayar::model()->findByPk(array('NIS'=>$NIS, 'KD_TAHUN_AJARAN'=>$KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$KD_ROMBEL, 'ID_PEMBAYARAN_SISWA'=>$ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR'=>$TANGGAL_BAYAR));
 		if($model==null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

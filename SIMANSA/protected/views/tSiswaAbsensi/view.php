@@ -8,10 +8,10 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List TSiswaAbsensi', 'url'=>array('index')),
 	array('label'=>'Create TSiswaAbsensi', 'url'=>array('create')),
-	array('label'=>'Update TSiswaAbsensi', 'url'=>array('update', 'nis'=>$model->nis, 'kd_tahun_ajaran'=>$model->kd_tahun_ajaran, 'kd_tingkat_kelas'=>$model->kd_tingkat_kelas, 'kd_program_pengajaran'=>$model->kd_program_pengajaran, 'kd_rombel'=>$model->kd_rombel, 'tanggal'=>$model->tanggal)),
+	array('label'=>'Update TSiswaAbsensi', 'url'=>array('update', 'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL)),
 	array('label'=>'Delete TSiswaAbsensi', 'url'=>'delete', 
 	      'linkOptions'=>array('submit'=>array('delete',
-	                                           'nis'=>$model->nis, 'kd_tahun_ajaran'=>$model->kd_tahun_ajaran, 'kd_tingkat_kelas'=>$model->kd_tingkat_kelas, 'kd_program_pengajaran'=>$model->kd_program_pengajaran, 'kd_rombel'=>$model->kd_rombel, 'tanggal'=>$model->tanggal),
+	                                           'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL),
 									'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage TSiswaAbsensi', 'url'=>array('admin')),
 );

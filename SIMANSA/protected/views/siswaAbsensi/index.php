@@ -22,10 +22,10 @@ $this->breadcrumbs = array(
             Daftar Absensi
         </h3>
         <div class="btn-group">
-            <button class="btn btn-default">Pilih Kelas</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+            <!--button class="btn btn-default">Pilih Kelas</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#">Action</a>
+                    <a href="">Action</a>
                 </li>
                 <li class="disabled">
                     <a href="#">Another action</a>
@@ -35,7 +35,16 @@ $this->breadcrumbs = array(
                 <li>
                     <a href="#">Something else here</a>
                 </li>
-            </ul>
+            </ul-->
+            <select name="selectKelas">
+                <option selected>Silahkan Pilih</option>
+                <?php
+                $kelas = $this->listKelas();
+                for ($index = 0; $index < count($kelas); $index++) {
+                    echo '<option value="' . $kelas[$index]->KD_KELAS . '">' . $kelas[$index]->NAMA_KELAS . '</option>';
+                }
+                ?>
+            </select>
         </div>
         <table class="table">
             <thead>
@@ -50,14 +59,23 @@ $this->breadcrumbs = array(
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!--tr>
                     <td>
                         1105087881
                     </td>
                     <td>
                         Mario Joel
                     </td>
-                </tr>
+                </tr-->
+                <?php
+                $id_kelas;
+                if(isset($_POST['selectKelas'])){
+                    $id_kelas = $_POST['selectKelas'];
+                    $listSiswa = $this->getKelas($id_kelas);
+                }    
+               
+                
+                ?>
             </tbody>
         </table>
     </div>

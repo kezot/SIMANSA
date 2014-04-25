@@ -1,10 +1,13 @@
+
 <?php
 class TNilaiRaporController extends Controller
 {
 	public $layout='//layouts/column2';
-	public $id = 'nilairapor';
-        
-	public function actionIndex()
+	
+        public $id = 'nilairapor';
+
+
+        public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('TNilaiRapor');
 		$this->render('index',array(
@@ -17,15 +20,15 @@ class TNilaiRaporController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'expression'=>'$user->isAdmin()'
+				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'expression'=>'$user->isAdmin()'
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'expression'=>'$user->isAdmin()'
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -49,20 +52,20 @@ class TNilaiRaporController extends Controller
 	        if($model->validate())
 	        {
 				$this->saveModel($model);
-				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJAR'=>$model->KD_PROGRAM_PENGAJAR, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR));
+				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR));
 	        }
 	    }
 	    $this->render('create',array('model'=>$model));
 	} 
 	
-	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
+	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			try
 			{
 				// we only allow deletion via POST request
-				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR)->delete();
+				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR)->delete();
 			}
 			catch(Exception $e) 
 			{
@@ -77,9 +80,9 @@ class TNilaiRaporController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
-	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
+	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
 	{
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR);
+		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -89,7 +92,7 @@ class TNilaiRaporController extends Controller
 			$model->attributes=$_POST['TNilaiRapor'];
 			$this->saveModel($model);
 			$this->redirect(array('view',
-	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJAR'=>$model->KD_PROGRAM_PENGAJAR, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR));
+	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR));
 		}
 
 		$this->render('update',array(
@@ -109,15 +112,15 @@ class TNilaiRaporController extends Controller
 		));
 	}
 	
-	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
+	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
 	{		
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR);
+		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR);
 		$this->render('view',array('model'=>$model));
 	}
 	
-	public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJAR, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
+	public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_PERIODE_BELAJAR)
 	{
-		$model=TNilaiRapor::model()->findByPk(array('NIS'=>$NIS, 'KD_TAHUN_AJARAN'=>$KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJAR'=>$KD_PROGRAM_PENGAJAR, 'KD_ROMBEL'=>$KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$KD_PERIODE_BELAJAR));
+		$model=TNilaiRapor::model()->findByPk(array('NIS'=>$NIS, 'KD_TAHUN_AJARAN'=>$KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$KD_ROMBEL, 'KD_PERIODE_BELAJAR'=>$KD_PERIODE_BELAJAR));
 		if($model==null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

@@ -2,14 +2,14 @@
 <?php
 $this->breadcrumbs=array(
 	'TSiswaAbsensis'=>array('index'),
-	'View'=>array('view', 'nis'=>$model->nis, 'kd_tahun_ajaran'=>$model->kd_tahun_ajaran, 'kd_tingkat_kelas'=>$model->kd_tingkat_kelas, 'kd_program_pengajaran'=>$model->kd_program_pengajaran, 'kd_rombel'=>$model->kd_rombel, 'tanggal'=>$model->tanggal),
+	'View'=>array('view', 'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL),
 	'Update',
 );
 
 $this->menu=array(
 	array('label'=>'List TSiswaAbsensi', 'url'=>array('index')),
 	array('label'=>'Create TSiswaAbsensi', 'url'=>array('create')),
-	array('label'=>'View TSiswaAbsensi', 'url'=>array('view', 'nis'=>$model->nis, 'kd_tahun_ajaran'=>$model->kd_tahun_ajaran, 'kd_tingkat_kelas'=>$model->kd_tingkat_kelas, 'kd_program_pengajaran'=>$model->kd_program_pengajaran, 'kd_rombel'=>$model->kd_rombel, 'tanggal'=>$model->tanggal)),
+	array('label'=>'View TSiswaAbsensi', 'url'=>array('view', 'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL)),
 	array('label'=>'Manage TSiswaAbsensi', 'url'=>array('admin')),
 ); 
 ?>
