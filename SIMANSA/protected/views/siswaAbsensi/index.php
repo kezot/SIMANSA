@@ -1,9 +1,16 @@
 <?php
 /* @var $this SiswaAbsensiController */
 
+$id_kelas = 0;
+$nilai = 0;
+$selected = '';
 $this->breadcrumbs = array(
     'Siswa Absensi',
 );
+
+if (isset($_POST['selectKelas'])) {
+    $id_kelas = (int) $_POST['selectKelas'];
+}
 ?>
 
 <h1>Siswa Absensi</h1>
@@ -36,15 +43,32 @@ $this->breadcrumbs = array(
                     <a href="#">Something else here</a>
                 </li>
             </ul-->
-            <select name="selectKelas">
-                <option selected>Silahkan Pilih</option>
-                <?php
-                $kelas = $this->listKelas();
-                for ($index = 0; $index < count($kelas); $index++) {
-                    echo '<option value="' . $kelas[$index]->KD_KELAS . '">' . $kelas[$index]->NAMA_KELAS . '</option>';
-                }
-                ?>
-            </select>
+            <form method="post" action="<?php echo htmlspecialchars(Yii::app()->request->baseUrl . '/index.php?r=siswaAbsensi'); ?>">
+                <select name="selectKelas" >
+                    <?php
+                    if ($id_kelas == 0) {
+                        $selected = 'selected';
+                    }
+                    echo '<option ' . $selected . ' value="-1">Silahkan Pilih</option>';
+                    //echo '<option>' . $selected . '</option>';
+                    $kelas = $this->listKelas();
+                    for ($index = 0; $index < count($kelas); $index++) {
+                        $nilai = (int) $kelas[$index]->KD_KELAS;
+                        //echo '<option>' . $nilai . '</option>';
+                        if ($nilai == $id_kelas) {
+                            $selected = 'selected';
+                            //echo '<option>' . $selected . '</option>';
+                        } else {
+                            $selected = '';
+                            //echo '<option>' . $selected . '</option>';
+                        }
+
+                        echo '<option value="' . $kelas[$index]->KD_KELAS . '" ' . $selected . '>' . $kelas[$index]->NAMA_KELAS . '</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" name="submit" value="Cari">
+            </form>
         </div>
         <table class="table">
             <thead>
@@ -68,13 +92,13 @@ $this->breadcrumbs = array(
                     </td>
                 </tr-->
                 <?php
-                $id_kelas;
-                if(isset($_POST['selectKelas'])){
-                    $id_kelas = $_POST['selectKelas'];
+                if (isset($_POST['selectKelas']) && $id_kelas>0) {
                     $listSiswa = $this->getKelas($id_kelas);
-                }    
-               
-                
+                    for ($index1 = 0; $index1 < count($listSiswa); $index1++) {
+                        echo '<tr>'.'<td>'.$listSiswa[$index1]->NIS.'</td>'
+                                . '<td><a href="'.Yii::app()->request->baseUrl.'/index.php?r=siswaAbsensi/crud&siswa='.$listSiswa[$index1]->NIS.'">'.$listSiswa[$index1]->NM_SISWA.'</td></tr>';
+                    }
+                }
                 ?>
             </tbody>
         </table>
