@@ -144,6 +144,46 @@
                             echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=user">Akun</a>
                           </li>';
                         }
+                        
+                        if (Yii::app()->user->isAdmin()) {
+                           if (Yii::app()->controller->id == 'jadwalmataajar') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=jadwalMataAjar">Jadwal Mata Ajar</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isSiswa() || Yii::app()->user->isOrangTua() ) {
+                           if (Yii::app()->controller->id == 'lihatabsensi') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatAbsensi">Lihat Absensi</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isSiswa() || Yii::app()->user->isOrangTua() ) {
+                           if (Yii::app()->controller->id == 'lihatpembayaran') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatPembayaran">Lihat Pembayaran</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isAdmin()) {
+                           if (Yii::app()->controller->id == 'lihatstatistiknilai') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatStatistikNilai">Lihat Statistik Nilai</a>
+                          </li>';
+                        }
 
                         /* <li>
                           <a href="#">Jadwal</a>

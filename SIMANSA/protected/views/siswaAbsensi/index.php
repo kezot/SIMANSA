@@ -16,7 +16,7 @@ if (isset($_POST['selectKelas'])) {
 <h1>Siswa Absensi</h1>
 
 <div class="row clearfix">
-    <div class="col-md-6 column">
+    <div class="col-md-9 column">
         <ul class="breadcrumb">
             <li>
                 <a href="#">Absensi</a> <span class="divider">/</span>
@@ -103,7 +103,7 @@ if (isset($_POST['selectKelas'])) {
             </tbody>
         </table>
     </div>
-    <div class="col-md-6 column">
+    <div class="col-md-2 column">
         <h3 class="text-center text-info">
             Detail Akun
         </h3><img alt="140x140" src="http://lorempixel.com/140/140/">

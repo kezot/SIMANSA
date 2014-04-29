@@ -2,16 +2,67 @@
 
 class SiswaAbsensiController extends Controller {
 
-    public $layout = '//layouts/column2';
+    public $layout = '//layouts/column1';
     public $listMurid = array();
 
     public function actionIndex() {
         $dataProvider = new CActiveDataProvider('SiswaAbsensi');
         $this->render('index', array('dataProvider' => $dataProvider));
     }
-    
+
     public function actionCrud() {
+        $nis="";
+        $tanggal="";
+        if(isset($_GET['siswa']) && isset($_GET['tanggal'])){
+            $nis = $_GET['siswa'];
+            $tanggal = $_GET['tanggal'];
+        }
+        echo $nis;
+        echo $tanggal;
+        if (isset($_GET['runFunction']) && function_exists($_GET['runFunction']))
+            $this->deleteData($nis, $tanggal);
+        else
+            //echo "Function not found or wrong input";
+
+
+
+
         $this->render('crud');
+    }
+
+    public function deleteData($NIS, $tanggal) {
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
+        $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
+        $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
+        $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;
+        $kodeRombel = $siswaTingkat->KD_ROMBEL;
+
+        $sbsen = SiswaAbsensi::model()->deleteByPk(
+                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
+            "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
+            "KD_ROMBEL" => $kodeRombel,
+            "KD_TAHUN_AJARAN" => $tahunAjaran,
+            "NIS"=>$NIS,
+            "TANGGAL"=>$tanggal), array('order' => 'TANGGAL DESC'));
+    }
+
+    public function updateData($primaryKey) {
+        
+    }
+
+    public function getAbsen($NIS) {
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
+        $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
+        $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
+        $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;
+        $kodeRombel = $siswaTingkat->KD_ROMBEL;
+
+        $listAbsen = SiswaAbsensi::model()->findAllByAttributes(
+                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
+            "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
+            "KD_ROMBEL" => $kodeRombel,
+            "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL DESC'));
+        return $listAbsen;
     }
 
     public function listKelas() {
