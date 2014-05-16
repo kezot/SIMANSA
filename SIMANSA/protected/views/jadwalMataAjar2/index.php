@@ -72,7 +72,7 @@ if (isset($_POST['selectKelas'])) {
                 <?php
                 for ($index = 0; $index < count($kelas); $index++) {
                         $nilai = (int) $kelas[$index]->KD_KELAS;
-                        echo '<tr> <td>'.$kelas[$index]->KD_KELAS . '</td>' .'<td>'. $kelas[$index]->NAMA_KELAS . '</td></tr>';
+                        echo '<tr> <td>'.$kelas[$index]->KD_KELAS . '</td>' .'<td><a href="'.Yii::app()->request->baseUrl.'/index.php?r=jadwalMataAjar2/crud&kelas='.$kelas[$index]->NAMA_KELAS.'">'.$kelas[$index]->NAMA_KELAS.'</td></tr>';
                     }
                 ?>
             </tbody>

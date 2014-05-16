@@ -42,10 +42,12 @@
         <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png"/>
         <link rel="shortcut icon" href="img/favicon.png"/>
 
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/scripts.js"></script>
-
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-ui-1.10.4.custom.js"></script>
+        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/scripts.js"></script>
+        
     </head>
 
     <body>
@@ -121,7 +123,7 @@
                             } else {
                                 echo '<li>';
                             }
-                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaAbsensi">Absensi</a>
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=siswaAbsensi">Absensi</a>
                           </li>';
                         }
 

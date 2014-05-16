@@ -23,11 +23,47 @@ class SiswaAbsensiController extends Controller {
             $this->deleteData($nis, $tanggal);
         else
             //echo "Function not found or wrong input";
-
-
-
-
         $this->render('crud');
+    }
+    
+    public function actionCreate(){
+        $absensi = new SiswaAbsensi;
+        $absensi->NIS = $_POST['inputNIS'];
+        $absensi->KD_TAHUN_AJARAN = $_POST['inputTahunAjaran'];
+        $absensi->KD_TINGKAT_KELAS = $_POST['inputTingkatKelas'];
+        $absensi->KD_PROGRAM_PENGAJARAN = $_POST['inputProgramPengajaran'];
+        $absensi->KD_ROMBEL = $_POST['inputRombel'];
+        $absensi->KD_PERIODE_BELAJAR = $_POST['inputSemester'];
+        $absensi->TANGGAL = $_POST['inputTanggal'];
+        $absensi->STATUS_ABSEN = $_POST['inputStatus'];
+        $absensi->USERNAME = 'adm';
+        $absensi->KETERANGAN = NULL;
+        $absensi->save();
+        
+        //$this->render("create");
+        $this->redirect(array('/siswaAbsensi/crud&siswa='.$absensi->NIS));
+        
+        
+    }
+    
+    public function actionDelete(){
+        
+        $nis = $_GET['nis'];
+        $tahunAjaran = $this->tahunAjaran;
+        $tingkatKelas = $_GET['tk'];
+        $programPengajaran = $_GET['pp'];
+        $rombel = $_GET['rom'];
+        $tanggal = $_GET['tanggal'];
+        $absensi = SiswaAbsensi::model()->findByPk(array("NIS" => $nis, "KD_TAHUN_AJARAN"=> $tahunAjaran, "KD_TINGKAT_KELAS"=> $tingkatKelas, "KD_PROGRAM_PENGAJARAN" => $programPengajaran, "KD_ROMBEL"=> $rombel, "TANGGAL"=> $tanggal ));
+        var_dump($absensi);
+        
+        $absensi->delete();
+        $this->redirect(array('/siswaAbsensi/crud&siswa='.$nis));
+        
+    }
+    
+    public function actionUpdate(){
+        
     }
 
     public function deleteData($NIS, $tanggal) {
@@ -51,7 +87,7 @@ class SiswaAbsensiController extends Controller {
     }
 
     public function getAbsen($NIS) {
-        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS, "KD_TAHUN_AJARAN" =>19) );
         $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
         $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
         $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;

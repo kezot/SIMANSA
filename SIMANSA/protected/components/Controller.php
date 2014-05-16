@@ -23,4 +23,6 @@ class Controller extends CController
         
         public $tahunAjaran = "19" ;
         
+        public $semester = "2";
+        
 }

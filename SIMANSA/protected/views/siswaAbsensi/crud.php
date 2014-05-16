@@ -12,22 +12,40 @@ $listAbsensi = $this->getAbsen($NISSiswa);
 ?>
 <div class="row clearfix">
     <div class="col-md9 column">
-        <ul class="breadcrumb">
-            <li>
-                <a href="#">Absensi</a> <span class="divider">/</span>
-            </li>
-            <li>
-                <a href="#">Pilih Kelas</a> <span class="divider">/</span>
-            </li>
-            <li class="active">
-                Detail Absensi
-            </li>
-        </ul>
         <h3 class="text-center text-info">
-            Detail Absensi: <?php 
+            Detail Absensi: <?php
             $namaSiswa = Siswa::model()->findByPk($NISSiswa)->NM_SISWA;
-            echo "$namaSiswa"?>
+            echo "$namaSiswa";
+            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NISSiswa, "KD_TAHUN_AJARAN" => $this->tahunAjaran));
+            ?>
         </h3>
+        <button id="create-user">Buat Baru</button>
+        <div id="formAbsensi" >
+            <form method="post" action="<?php echo htmlspecialchars(Yii::app()->request->baseUrl . "/index.php?r=siswaAbsensi/create"); ?>">
+                <input name ="inputNIS" id="inputNIS" type="hidden" value="<?php echo $NISSiswa; ?>">
+                <input name ="inputTahunAjaran" id="inputTahunAjaran" type="hidden" value="<?php echo $this->tahunAjaran; ?>">
+                <input name ="inputTingkatKelas" id="inputTingkatKelas" type="hidden" value="<?php echo $siswaTingkat->KD_TINGKAT_KELAS; ?>">
+                <input name ="inputProgramPengajaran" id="inputProgramPengajaran" type="hidden" value="<?php echo $siswaTingkat->KD_PROGRAM_PENGAJARAN;?>">
+                <input name ="inputRombel" id="inputRombel" type="hidden" value="<?php echo $siswaTingkat->KD_ROMBEL ?>">
+                <input type="date" id="inputTanggal" name="inputTanggal">
+                <select name="inputSemester" id="inputSemester">
+                    <option>Silahkan Pilih</option>
+                    <option value="1">Ganjil</option>
+                    <option value="2">Genap</option>
+                </select>
+                <select name="inputStatus" id="inputStatus">
+                    <option>Silahkan Pilih</option>
+                    <option value="1">Alfa</option>
+                    <option value="2">Izin</option>
+                    <option value="3">Sakit</option>
+                </select>
+                <input name="inputUsername" id="inputUsername" type="hidden" value="<?php Yii::app()->user->name ?>">
+                <input type="submit" id ="inputAbsen"  value="insert">
+            </form>
+            <script>
+
+            </script>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -120,46 +138,54 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                     </td>
                 </tr-->
                 <?php
-                    $NISSiswa = $_GET['siswa'];
-                    $listAbsensi = $this->getAbsen($NISSiswa);
-                    for ($index = 0; $index < count($listAbsensi); $index++) {
-                        $tanggal = $listAbsensi[$index]->TANGGAL;
-                        $kodePerioderBelajar = $listAbsensi[$index]->KD_PERIODE_BELAJAR;
-                        $status = (int)$listAbsensi[$index]->STATUS_ABSEN;
-                        if($status == 1){
-                            $status = "Sakit";
-                        } else if ($status == 2) {
-                            $status = "Izin";
-                        } else {
-                            $status = "Alfa";
+                $NISSiswa = $_GET['siswa'];
+                $listAbsensi = $this->getAbsen($NISSiswa);
+                for ($index = 0; $index < count($listAbsensi); $index++) {
+                    $tanggal = $listAbsensi[$index]->TANGGAL;
+                    $kodePerioderBelajar = $listAbsensi[$index]->KD_PERIODE_BELAJAR;
+                    $status = (int) $listAbsensi[$index]->STATUS_ABSEN;
+                    if ($status == 1) {
+                        $status = "Sakit";
+                    } else if ($status == 2) {
+                        $status = "Izin";
+                    } else {
+                        $status = "Alfa";
+                    }
+                    if ($kodePerioderBelajar == 1) {
+                        $kodePerioderBelajar = "Ganjil";
+                    } else {
+                        $kodePerioderBelajar = "Genap";
+                    }
+                    echo '<tr>
+                    <td>
+                        ' . ($index + 1) . '
+                    </td>
+                    <td>
+                        ' . $tanggal . '<input type="hidden" value="">
+                    </td>
+                    <td>
+                        ' . $kodePerioderBelajar . '
+                    </td>
+                    <td>
+                        ' . $status . '
+                    </td>
+                    <td>
+                    <button id="button'.($index + 1).'">update</button>
+                    <script>
+                        $("button'.($index + 1).'").click( function()
+                        {
+                            $("#inputTanggal").attr("value", "'.$tanggal.'");
                         }
-                        if($kodePerioderBelajar ==1){
-                            $kodePerioderBelajar = "Ganjil";
-                        } else {
-                            $kodePerioderBelajar = "Genap";
-                        }
-                        echo '<tr>
-                    <td>
-                        '.($index+1).'
-                    </td>
-                    <td>
-                        '.$tanggal.'
-                    </td>
-                    <td>
-                        '.$kodePerioderBelajar.'
-                    </td>
-                    <td>
-                        '.$status.'
-                    </td>
-                    <td>
-                    <a href="'.Yii::app()->request->baseUrl.'/index.php?r=siswaAbsensi/crud&runFunction=deleteData&siswa='.$NISSiswa.'&tanggal='.$listAbsensi[$index]->TANGGAL.'">Delete
+                        );
+                    </script>
+                    <a href="' . Yii::app()->request->baseUrl . '/index.php?r=siswaAbsensi/delete&nis=' . $NISSiswa . '&tk='.$siswaTingkat->KD_TINGKAT_KELAS.'&pp='.$siswaTingkat->KD_PROGRAM_PENGAJARAN.'&rom='.$siswaTingkat->KD_ROMBEL.'&tanggal=' . $listAbsensi[$index]->TANGGAL . '"><button>Delete</button>
                     </td>
                 </tr>';
-                    }
+                }
                 ?>
             </tbody>
         </table>
-        
+
     </div>
     <div class="col-md-2 column">
         <h3 class="text-center text-info">

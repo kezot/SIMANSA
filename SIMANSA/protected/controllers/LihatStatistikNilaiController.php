@@ -2,17 +2,63 @@
 <?php
 class LihatStatistikNilaiController extends Controller
 {
-	public $layout='//layouts/column2';
-	public $id = 'lihatstatistiknilai';
+	public  $layout = '//layouts/column2';
+	public	$user = Yii::app()->user;
+//	public	$profile = User::model()->findAllByAttributes(array("username"=>$user));
+	
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TSiswaAbsensi');
+		$dataProvider=new CActiveDataProvider('TNilaiRaporNilai');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
     }
 	
-	public function accessRules()
+    public function listKelas() {
+        $kelas = Kelas::model()->findAll(array('order' => 'KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL'));
+        return $kelas;
+    }
+
+    public function listMapel() {
+        $mapel = RMataPelajaranDiajarkan::model()->findAll(array('order' => 'ORDER_LIST'));
+        return $mapel;
+    }
+    
+    // public function listSemester() {
+    //     $mapel = RMataPelajaranDiajarkan::model()->findAll(array('order' => 'ORDER_LIST'));
+    //     return $mapel;
+    // }
+
+    public function getSiswa($id_kelas, $id_mapel) {
+        $kelas = Kelas::model()->findByPk($id_kelas);
+        // $mapel = RMataPelajaranDiajarkan::model()->findByPk($id_mapel);
+//        echo $kelas->KD_TINGKAT_KELAS . "<br>";
+//        echo $kelas->KD_PROGRAM_PENGAJARAN . "<br>";
+//        echo $kelas->KD_ROMBEL . "<br>";
+//        echo $this->tahunAjaran . "<br>";
+        $listNilai = TNilaiRaporNilai::model()->findAllByAttributes(
+                array("KD_TINGKAT_KELAS" => $kelas->KD_TINGKAT_KELAS,
+                    "KD_PROGRAM_PENGAJARAN" => $kelas->KD_PROGRAM_PENGAJARAN,
+                    "KD_ROMBEL" => $kelas->KD_ROMBEL,
+                    "KD_TAHUN_AJARAN" =>'15',
+                    "KD_MATA_PELAJARAN_DIAJARKAN"=>$id_mapel));
+
+		// $query='SELECT n.NIS, n.NILAI_KOGNITIF from T_Siswa_Tingkat s, T_NILAI_RAPOR_NILAI n where s.NIS=n.NIS AND s.KD_TINGKAT_KELAS=n.KD_TINGKAT_KELAS AND 
+		// s.KD_TAHUN_AJARAN=n.KD_TAHUN_AJARAN AND s.KD_PROGRAM_PENGAJARAN=n.KD_PROGRAM_PENGAJARAN AND s.KD_ROMBEL=n.KD_ROMBEL AND n.KD_TAHUN_AJARAN='.$this->tahunAjaran.'AND n.KD_MATA_PELAJARAN_DIAJARKAN='.$id_mapel.'AND n.KD_ROMBEL='.$kelas->KD_ROMBEL.'AND n.KD_PROGRAM_PENGAJARAN='.$kelas->KD_PROGRAM_PENGAJARAN.
+		// 'AND n.KD_TINGKAT_KELAS='.$kelas->KD_TINGKAT_KELAS;
+		//$query='SELECT n.NIS, n.NILAI_KOGNITIF from T_Siswa_Tingkat s, T_NILAI_RAPOR_NILAI n where s.NIS=n.NIS AND s.KD_TINGKAT_KELAS=n.KD_TINGKAT_KELAS AND 
+		//s.KD_TAHUN_AJARAN=n.KD_TAHUN_AJARAN AND s.KD_PROGRAM_PENGAJARAN=n.KD_PROGRAM_PENGAJARAN AND s.KD_ROMBEL=n.KD_ROMBEL AND n.KD_TAHUN_AJARAN=15 AND n.KD_MATA_PELAJARAN_DIAJARKAN=05005 AND n.KD_ROMBEL=1 AND n.KD_PROGRAM_PENGAJARAN=3 AND n.KD_TINGKAT_KELAS=02';
+		//$listSiswa = mysql_query($query);
+
+       	return $listNilai;
+    }
+
+    public function getNamaSiswa($NIS) {
+        $namaSiswa = Siswa::model()->findByPK($NIS);
+        return $namaSiswa;
+    }
+
+    public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions

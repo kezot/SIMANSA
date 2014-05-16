@@ -6,42 +6,34 @@ and open the template in the editor.
 
 -->
 <?php
-/* @var $this SiswaAbsensiController */
-$NISSiswa = $_GET['siswa'];
-$listAbsensi = $this->getAbsen($NISSiswa);
+/* @var $this JadwalMataAjar2Controller */
 ?>
 <div class="row clearfix">
     <div class="col-md9 column">
-        <ul class="breadcrumb">
-            <li>
-                <a href="#">Absensi</a> <span class="divider">/</span>
-            </li>
-            <li>
-                <a href="#">Pilih Kelas</a> <span class="divider">/</span>
-            </li>
-            <li class="active">
-                Detail Absensi
-            </li>
-        </ul>
         <h3 class="text-center text-info">
             Detail Absensi: <?php 
-            $namaSiswa = Siswa::model()->findByPk($NISSiswa)->NM_SISWA;
-            echo "$namaSiswa"?>
+            $namaKelas = $_GET['kelas'];
+            echo "$namaKelas"?>
         </h3>
+        <div id="formForm">
+            <form method="post" action="<?php echo  ?>">
+                <input type="number" name="inputJam">
+                <input type="text" name="inputMataPelajaran">
+                <input type="submit" value="insert">
+            </form>
+        </div>
         <table class="table">
             <thead>
                 <tr>
+                    
                     <th>
-                        #
+                        Hari
                     </th>
                     <th>
-                        Tanggal
+                        Jam
                     </th>
                     <th>
-                        Kode Periode Belajar
-                    </th>
-                    <th>
-                        Status Absen
+                        Mata Pelajaran
                     </th>
                     <th>
                         Operasi
@@ -120,41 +112,16 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                     </td>
                 </tr-->
                 <?php
-                    $NISSiswa = $_GET['siswa'];
-                    $listAbsensi = $this->getAbsen($NISSiswa);
-                    for ($index = 0; $index < count($listAbsensi); $index++) {
-                        $tanggal = $listAbsensi[$index]->TANGGAL;
-                        $kodePerioderBelajar = $listAbsensi[$index]->KD_PERIODE_BELAJAR;
-                        $status = (int)$listAbsensi[$index]->STATUS_ABSEN;
-                        if($status == 1){
-                            $status = "Sakit";
-                        } else if ($status == 2) {
-                            $status = "Izin";
-                        } else {
-                            $status = "Alfa";
-                        }
-                        if($kodePerioderBelajar ==1){
-                            $kodePerioderBelajar = "Ganjil";
-                        } else {
-                            $kodePerioderBelajar = "Genap";
-                        }
-                        echo '<tr>
-                    <td>
-                        '.($index+1).'
-                    </td>
-                    <td>
-                        '.$tanggal.'
-                    </td>
-                    <td>
-                        '.$kodePerioderBelajar.'
-                    </td>
-                    <td>
-                        '.$status.'
-                    </td>
-                    <td>
-                    <a href="'.Yii::app()->request->baseUrl.'/index.php?r=siswaAbsensi/crud&runFunction=deleteData&siswa='.$NISSiswa.'&tanggal='.$listAbsensi[$index]->TANGGAL.'">Delete
-                    </td>
-                </tr>';
+                    $kelas = $_GET["kelas"];
+                    $listJadwalMataAjar = $this->getJadwalMataAjar($namaKelas);
+                    for ($index = 0; $index < count($listJadwalMataAjar); $index++) {
+                        $hari = $listJadwalMataAjar[$index]->HARI;
+                        $waktu = $listJadwalMataAjar[$index]->JAM;
+                        $mataPelajaran = $listJadwalMataAjar[$index]->MATA_PELAJARAN;
+                        
+                        echo 
+                        '<tr><td>'.$hari.'</td><td>'.$waktu.'</td><td>'.$mataPelajaran.'</td><tr>'
+                        ;
                     }
                 ?>
             </tbody>

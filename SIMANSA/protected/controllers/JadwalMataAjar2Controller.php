@@ -13,9 +13,6 @@ class JadwalMataAjar2Controller extends Controller
     public function actionCrud() {
         
 
-
-
-
         $this->render('crud');
     }
 
@@ -39,20 +36,7 @@ class JadwalMataAjar2Controller extends Controller
         
     }
 
-    public function getAbsen($NIS) {
-        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
-        $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
-        $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
-        $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;
-        $kodeRombel = $siswaTingkat->KD_ROMBEL;
-
-        $listAbsen = SiswaAbsensi::model()->findAllByAttributes(
-                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
-            "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
-            "KD_ROMBEL" => $kodeRombel,
-            "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL DESC'));
-        return $listAbsen;
-    }
+    
 
     public function listKelas() {
         $kelas = Kelas::model()->findAll(array('order' => 'KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL'));
@@ -92,9 +76,12 @@ class JadwalMataAjar2Controller extends Controller
     }
     
     public function getJadwalMataAjar($namaKelas){
-        $listJadwal = JadwalMataAjar::model()->findAllByAttributes(array("NAMA_KELAS" =>$namaKelas));
+        $listJadwal = JadwalMataAjar::model()->findAllByAttributes(array("NAMA_KELAS" =>$namaKelas),
+                array('order' => 'HARI DESC, JAM DESC'));
         return $listJadwal;
     }
+    
+    
 
     // Uncomment the following methods and override them if needed
     /*

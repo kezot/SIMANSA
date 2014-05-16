@@ -115,4 +115,10 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+        
+        public function getJadwalMataAjar($hari, $jamKe, $kelas){
+            $jadwal = JadwalMataAjar::model()->findByAttributes(
+                    array("NAMA_KELAS"=> $kelas, "HARI"=> $hari, "JAM" =>$jamKe));
+            return $jadwal;
+        }
 }
