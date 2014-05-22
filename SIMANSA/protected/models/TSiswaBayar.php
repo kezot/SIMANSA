@@ -141,4 +141,22 @@ class TSiswaBayar extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function getBayar($NIS) {
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS, "KD_TAHUN_AJARAN" =>19) );
+        $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
+        $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
+        $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;
+        $kodeRombel = $siswaTingkat->KD_ROMBEL;
+
+        $listBayar = TSiswaBayar::model()->findAllByAttributes(
+                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
+            "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
+            "KD_ROMBEL" => $kodeRombel,
+            "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL_BAYAR DESC'));
+        //return $listBayar;
+        $criteria = new CDbCriteria;
+        $criteria->addColumnCondition(array('KD_TINGKAT_KELAS' => $kodeTingkatKelas,'KD_PROGRAM_PENGAJARAN' => $kodeProgramPengajaran,'KD_ROMBEL' => $kodeRombel, "KD_TAHUN_AJARAN" => $tahunAjaran));
+        return new CActiveDataProvider($this, array('criteria'=>$criteria));
+    }
 }

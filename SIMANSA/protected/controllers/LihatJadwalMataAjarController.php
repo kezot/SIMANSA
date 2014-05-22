@@ -2,7 +2,8 @@
 
 class LihatJadwalMataAjarController extends Controller
 {
-	public function actionIndex()
+    public $id = 'lihatjadwalmataajar';
+    public function actionIndex()
 	{
 		$this->render('index');
 	}

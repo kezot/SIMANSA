@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Jadwal Mata Ajar',
+	'Jadwal Mata Ajars',
 );
 
 $this->menu=array(

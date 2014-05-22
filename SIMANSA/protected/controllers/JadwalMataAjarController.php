@@ -1,17 +1,29 @@
 <?php
+
 class JadwalMataAjarController extends Controller
 {
+	/**
+	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+	 */
 	public $layout='//layouts/column2';
-	public $id = 'jadwalmataajar';
-        
-	public function actionIndex()
+
+	/**
+	 * @return array action filters
+	 */
+	public function filters()
 	{
-		$dataProvider=new CActiveDataProvider('JadwalMataAjar');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		return array(
+			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
+		);
 	}
-	
+
+	/**
+	 * Specifies the access control rules.
+	 * This method is used by the 'accessControl' filter.
+	 * @return array access control rules
+	 */
 	public function accessRules()
 	{
 		return array(
@@ -25,7 +37,7 @@ class JadwalMataAjarController extends Controller
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -33,53 +45,24 @@ class JadwalMataAjarController extends Controller
 		);
 	}
 
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionView($id)
+	{
+		$this->render('view',array(
+			'model'=>$this->loadModel($id),
+		));
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
 	public function actionCreate()
 	{
-	    $model=new JadwalMataAjar;
-
-	    if(isset($_POST['ajax']) && $_POST['ajax']==='client-account-create-form')
-	    {
-	        echo CActiveForm::validate($model);
-	        Yii::app()->end();
-	    }
-
-	    if(isset($_POST['JadwalMataAjar']))
-	    {
-	        $model->attributes=$_POST['JadwalMataAjar'];
-	        if($model->validate())
-	        {
-				$this->saveModel($model);
-				$this->redirect(array('view','NAMA_KELAS'=>$model->NAMA_KELAS, 'HARI'=>$model->HARI, 'JAM'=>$model->JAM));
-	        }
-	    }
-	    $this->render('create',array('model'=>$model));
-	} 
-	
-	public function actionDelete($NAMA_KELAS, $HARI, $JAM)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			try
-			{
-				// we only allow deletion via POST request
-				$this->loadModel($NAMA_KELAS, $HARI, $JAM)->delete();
-			}
-			catch(Exception $e) 
-			{
-				$this->showError($e);
-			}
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
-	
-	public function actionUpdate($NAMA_KELAS, $HARI, $JAM)
-	{
-		$model=$this->loadModel($NAMA_KELAS, $HARI, $JAM);
+		$model=new JadwalMataAjar;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -87,16 +70,67 @@ class JadwalMataAjarController extends Controller
 		if(isset($_POST['JadwalMataAjar']))
 		{
 			$model->attributes=$_POST['JadwalMataAjar'];
-			$this->saveModel($model);
-			$this->redirect(array('view',
-	                    'NAMA_KELAS'=>$model->NAMA_KELAS, 'HARI'=>$model->HARI, 'JAM'=>$model->JAM));
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->ID));
+		}
+
+		$this->render('create',array(
+			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['JadwalMataAjar']))
+		{
+			$model->attributes=$_POST['JadwalMataAjar'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->ID));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
 		));
 	}
-	
+
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete($id)
+	{
+		$this->loadModel($id)->delete();
+
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('JadwalMataAjar');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
 	public function actionAdmin()
 	{
 		$model=new JadwalMataAjar('search');
@@ -108,39 +142,32 @@ class JadwalMataAjarController extends Controller
 			'model'=>$model,
 		));
 	}
-	
-	public function actionView($NAMA_KELAS, $HARI, $JAM)
-	{		
-		$model=$this->loadModel($NAMA_KELAS, $HARI, $JAM);
-		$this->render('view',array('model'=>$model));
-	}
-	
-	public function loadModel($NAMA_KELAS, $HARI, $JAM)
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return JadwalMataAjar the loaded model
+	 * @throws CHttpException
+	 */
+	public function loadModel($id)
 	{
-		$model=JadwalMataAjar::model()->findByPk(array('NAMA_KELAS'=>$NAMA_KELAS, 'HARI'=>$HARI, 'JAM'=>$JAM));
-		if($model==null)
+		$model=JadwalMataAjar::model()->findByPk($id);
+		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
 
-	public function saveModel($model)
+	/**
+	 * Performs the AJAX validation.
+	 * @param JadwalMataAjar $model the model to be validated
+	 */
+	protected function performAjaxValidation($model)
 	{
-		try
+		if(isset($_POST['ajax']) && $_POST['ajax']==='jadwal-mata-ajar-form')
 		{
-			$model->save();
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
 		}
-		catch(Exception $e)
-		{
-			$this->showError($e);
-		}		
 	}
-
-	function showError(Exception $e)
-	{
-		if($e->getCode()==23000)
-			$message = "This operation is not permitted due to an existing foreign key reference.";
-		else
-			$message = "Invalid operation.";
-		throw new CHttpException($e->getCode(), $message);
-	}		
 }

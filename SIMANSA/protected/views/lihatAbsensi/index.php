@@ -13,7 +13,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'lihatAbsensiGrid',
     'columns' => array(
         'TANGGAL',
-        'STATUS_ABSEN',
+        array(
+        	'name' => 'STATUS_ABSEN',
+		    'type' => 'raw',
+		    'header' => 'Status Absen',
+		    'value'=>function($data){
+		        if ($data->STATUS_ABSEN  == 1){
+		            $class = 'Sakit';
+		        }
+		        else if ($data->STATUS_ABSEN  == 2){
+		            $class = 'Izin';
+		        }
+		        else{
+		            $class = 'Alfa';
+		        }
+		        return $class;
+		    },
+        ),
         'KETERANGAN',
     )
 )); ?>

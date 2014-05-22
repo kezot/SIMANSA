@@ -104,6 +104,15 @@
                                 </li>';
                             
                         }
+                        if (!Yii::app()->user->isGuest) {
+                           if (Yii::app()->controller->id == 'profil') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=profil">Profil</a>
+                          </li>';
+                        }
 
                         /* <li>
                           <a href="#">Profil</a>
@@ -168,6 +177,16 @@
                         }
                         
                         if (Yii::app()->user->isSiswa() || Yii::app()->user->isOrangTua() ) {
+                           if (Yii::app()->controller->id == 'lihatnilai') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatNilai">Lihat Nilai</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isSiswa() || Yii::app()->user->isOrangTua() ) {
                            if (Yii::app()->controller->id == 'lihatpembayaran') {
                                 echo '<li class="active">';
                             } else {
@@ -186,6 +205,39 @@
                             echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatStatistikNilai">Lihat Statistik Nilai</a>
                           </li>';
                         }
+                        if (Yii::app()->user->isSiswa()) {
+                           if (Yii::app()->controller->id == 'lihatjadwalmataajar') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=lihatJadwalMataAjar">Lihat Jadwal Mata Ajar</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isWaliKelas()) {
+                           if (Yii::app()->controller->id == 'walilihatabsensi') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=waliLihatAbsensi">Lihat Absensi Siswa</a>
+                          </li>';
+                        }
+                        
+                        if (Yii::app()->user->isWaliKelas()) {
+                           if (Yii::app()->controller->id == 'walilihatpembayaran') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=waliLihatPembayaran">Lihat Pembayaran Siswa</a>
+                          </li>';
+                        }
+                        
+                        
+                        
+
 
                         /* <li>
                           <a href="#">Jadwal</a>

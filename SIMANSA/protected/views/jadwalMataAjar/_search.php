@@ -31,6 +31,11 @@
 		<?php echo $form->textField($model,'MATA_PELAJARAN',array('size'=>50,'maxlength'=>50)); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'ID'); ?>
+		<?php echo $form->textField($model,'ID'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

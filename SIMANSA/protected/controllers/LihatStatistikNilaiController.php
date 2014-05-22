@@ -2,9 +2,7 @@
 <?php
 class LihatStatistikNilaiController extends Controller
 {
-	public  $layout = '//layouts/column2';
-	public	$user = Yii::app()->user;
-//	public	$profile = User::model()->findAllByAttributes(array("username"=>$user));
+	public $layout='//layouts/column2';
 	
 	public function actionIndex()
 	{
@@ -77,82 +75,6 @@ class LihatStatistikNilaiController extends Controller
 				'users'=>array('*'),
 			),
 		);
-	}
-
-	public function actionCreate()
-	{
-	    $model=new LihatStatistikNilai;
-
-	    if(isset($_POST['ajax']) && $_POST['ajax']==='client-account-create-form')
-	    {
-	        echo CActiveForm::validate($model);
-	        Yii::app()->end();
-	    }
-
-	    if(isset($_POST['LihatStatistikNilai']))
-	    {
-	        $model->attributes=$_POST['LihatStatistikNilai'];
-	        if($model->validate())
-	        {
-				$this->saveModel($model);
-				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_KURIKULUM'=>$model->KD_KURIKULUM, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR, 'KD_MATA_PELAJARAN'=>$model->KD_MATA_PELAJARAN));
-	        }
-	    }
-	    $this->render('create',array('model'=>$model));
-	} 
-	
-	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_KURIKULUM, $KD_PERIODE_BELAJAR, $KD_MATA_PELAJARAN)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			try
-			{
-				// we only allow deletion via POST request
-				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_KURIKULUM, $KD_PERIODE_BELAJAR, $KD_MATA_PELAJARAN)->delete();
-			}
-			catch(Exception $e) 
-			{
-				$this->showError($e);
-			}
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
-	
-	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_KURIKULUM, $KD_PERIODE_BELAJAR, $KD_MATA_PELAJARAN)
-	{
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_KURIKULUM, $KD_PERIODE_BELAJAR, $KD_MATA_PELAJARAN);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['LihatStatistikNilai']))
-		{
-			$model->attributes=$_POST['LihatStatistikNilai'];
-			$this->saveModel($model);
-			$this->redirect(array('view',
-	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'KD_KURIKULUM'=>$model->KD_KURIKULUM, 'KD_PERIODE_BELAJAR'=>$model->KD_PERIODE_BELAJAR, 'KD_MATA_PELAJARAN'=>$model->KD_MATA_PELAJARAN));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-	
-	public function actionAdmin()
-	{
-		$model=new LihatStatistikNilai('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['LihatStatistikNilai']))
-			$model->attributes=$_GET['LihatStatistikNilai'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
 	}
 	
 	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $KD_KURIKULUM, $KD_PERIODE_BELAJAR, $KD_MATA_PELAJARAN)

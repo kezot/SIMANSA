@@ -10,7 +10,7 @@ class TNilaiRaporController extends Controller
         public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('TNilaiRapor');
-		$this->render('index',array(
+		$this->render('JTableAction',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
@@ -145,5 +145,23 @@ class TNilaiRaporController extends Controller
 		else
 			$message = "Invalid operation.";
 		throw new CHttpException($e->getCode(), $message);
-	}		
+	}
+        
+        public function actionJTableAction() {
+        return array(
+            'user' => array(
+                'class' => 'JRestAction',
+                'model' => 'TNilaiRapor',
+            ),
+            'useradmin' => array(
+                'class' => 'JTableAction',
+                'model' => 'TNilaiRapor',
+            ),
+        );
+        $dataProvider=new CActiveDataProvider('TNilaiRapor');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+    }
+
 }

@@ -12,11 +12,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$dataProvider,
     'id' => 'lihatPembayaranGrid',
     'columns' => array(
-        'ID_PEMBAYARAN_SISWA',
+        array(
+            'header' => 'Pembayaran',
+            'name' => 'ID_PEMBAYARAN_SISWA',
+            'type' => 'raw',
+            'value' => '($data->ID_PEMBAYARAN_SISWA == "") ? "" : $data->iDPEMBAYARANSISWA->NM_PEMBAYARAN_SISWA',
+            //'value' => $data->TNilaiRaporNilai->KD_MATA_PELAJARAN_DIAJARKAN,
+        ),
         'TANGGAL_BAYAR',
         'JUMLAH_BAYAR',
         'KETERANGAN',
     )
 ));
 ?>
-)); ?>

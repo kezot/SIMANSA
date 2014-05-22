@@ -3,7 +3,7 @@
 /* @var $model JadwalMataAjar */
 
 $this->breadcrumbs=array(
-	'Jadwal Mata Ajar'=>array('index'),
+	'Jadwal Mata Ajars'=>array('index'),
 	'Create',
 );
 

@@ -56,10 +56,10 @@ $this->pageTitle = Yii::app()->name . ' - Login';
         <div class="row clearfix">
             <div class="col-md-12 column">
                 <div class="row clearfix">
-                    <div class="col-md-4 column">
+                    <div class="col-md-3 column">
                     </div>
-                    <div class="col-md-4 column">
-                        <div class ="form">
+                    <div class="col-md-5 column">
+                        <div class ="form" id="loginLogin">
                             <div class="form-group">
                                 <?php echo $form->labelEx($model, 'username'); ?>
                                 <?php echo $form->textField($model, 'username'); ?>

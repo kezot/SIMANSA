@@ -80,7 +80,7 @@ class TNilaiRaporNilai extends CActiveRecord
 			'kDROMBEL' => array(self::BELONGS_TO, 'TNilaiRapor', 'KD_ROMBEL'),
 			'kDPERIODEBELAJAR' => array(self::BELONGS_TO, 'TKurKurikulum', 'KD_PERIODE_BELAJAR'),
 			'kDKURIKULUM' => array(self::BELONGS_TO, 'TKurKurikulum', 'KD_KURIKULUM'),
-			'kDMATAPELAJARANDIAJARKAN' => array(self::BELONGS_TO, 'TKurKurikulum', 'KD_MATA_PELAJARAN_DIAJARKAN'),
+			'kDMATAPELAJARANDIAJARKAN' => array(self::BELONGS_TO, 'RMataPelajaranDiajarkan', 'KD_MATA_PELAJARAN_DIAJARKAN'),
 			'iDNILAIAFEKTIF' => array(self::BELONGS_TO, 'RNilaiAfektif', 'ID_NILAI_AFEKTIF'),
 			'uSERNAME' => array(self::BELONGS_TO, 'Auth', 'USERNAME'),
 		);

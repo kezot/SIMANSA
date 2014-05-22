@@ -3,12 +3,26 @@
 class LihatPembayaranController extends Controller
 {
 	public $layout='//layouts/column2';
-	public $id = 'lihatpembayaran';
+	
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TSiswaBayar');
+		$profile = $this->getUser();
+
+		$criteria = new CDbCriteria(array(                    
+                'order'=>'ID_PEMBAYARAN_SISWA desc',
+                'condition'=>'NIS='.$profile[0],
+
+        ));
+
+		$dataProvider=new CActiveDataProvider('TSiswaBayar', array(
+		            'criteria'=>$criteria,
+		    ));
+
+
+		$model = new TSiswaBayar('search');
+
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'dataProvider'=>$dataProvider, 'model'=>$model,
 		));
 	}
 	

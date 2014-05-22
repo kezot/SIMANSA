@@ -1,29 +1,33 @@
 <!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
-<?php
-$this->breadcrumbs=array(
-	'Lihat Statistik Nilai',
-);
-?>
 
 <?php
-/* @var $this  LihatStatistikNilaiController*/
+/* @var $this SiswaAbsensiController */
+
+
+// $this->breadcrumbs = array(
+//     'Lihat Statistik Nilai',
+// );
 
 $id_kelas = 0;
-$tanda = 0;
+$id_mapel='';
 $selected = '';
-$this->breadcrumbs = array(
-    'Lihat Statistik Nilai',
-);
+$selected1 = '';
 
 if (isset($_POST['selectKelas'])) {
     $id_kelas = (int) $_POST['selectKelas'];
+}
+
+if (isset($_POST['selectMapel'])) {
+    $id_mapel = $_POST['selectMapel'];
 }
 ?>
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 //	'id'=>'tinstrument-form',
 //	'enableAjaxValidation'=>false,
-)); ?>
+));
+?>
+
 
 <form method="post" action="<?php echo htmlspecialchars(Yii::app()->request->baseUrl . '/index.php?r=LihatStatistik'); ?>">
                 <select name="selectKelas" >
@@ -31,7 +35,7 @@ if (isset($_POST['selectKelas'])) {
                     if ($id_kelas == 0) {
                         $selected = 'selected';
                     }
-                    echo '<option ' . $selected . ' value="-1">Silahkan Pilih</option>';
+                    echo '<option ' . $selected . ' value="-1">Pilih Kelas</option>';
                     //echo '<option>' . $selected . '</option>';
                     $kelas = $this->listKelas();
                     for ($index = 0; $index < count($kelas); $index++) {
@@ -49,6 +53,30 @@ if (isset($_POST['selectKelas'])) {
                     }
                     ?>
                 </select>
+
+                <select name="selectMapel" >
+                    <?php
+                    if ($id_mapel =='') {
+                        $selected1 = 'selected';
+                    }
+                    echo '<option ' . $selected1 . ' value="-1">Pilih Mapel</option>';
+                    //echo '<option>' . $selected . '</option>';
+                    $mapel = $this->listMapel();
+                    for ($index = 0; $index < count($mapel); $index++) {
+                        $tanda1 = $mapel[$index]->KD_MATA_PELAJARAN_DIAJARKAN;
+                        //echo '<option>' . $tanda . '</option>';
+                        if ($tanda1 == $id_mapel) {
+                            $selected1 = 'selected';
+                            //echo '<option>' . $selected . '</option>';
+                        } else {
+                            $selected1 = '';
+                            //echo '<option>' . $selected . '</option>';
+                        }
+
+                        echo '<option value="' . $mapel[$index]->KD_MATA_PELAJARAN_DIAJARKAN . '" ' . $selected1 . '>' . $mapel[$index]->NM_MATA_PELAJARAN_DIAJARKAN . '</option>';
+                    }
+                    ?>
+                </select>
                 <input type="submit" name="submit" value="Cari">
             </form>
         </div>
@@ -57,35 +85,29 @@ if (isset($_POST['selectKelas'])) {
 <?php
 $listSiswa=array();
 $arr=array();
-if (isset($_POST['selectKelas']) && $id_kelas > 0) {
-    $listSiswa = $this->getKelas($id_kelas);
-    for ($index1 = 0; $index1 < count($listSiswa); $index1++) {
-        //echo $listSiswa[$index1]->NIS.' ';
-        $arr[$index1]=$listSiswa[$index1]->NIS;
-        //echo $arr[$index1].' ';
+// $listNilai = TNilaiRaporNilai::model()->findAllByAttributes(
+//                 array("KD_TINGKAT_KELAS" => 2,
+//                     "KD_PROGRAM_PENGAJARAN" => 3,
+//                     "KD_ROMBEL" => 1,
+//                     "KD_TAHUN_AJARAN" =>15,
+//                     "KD_MATA_PELAJARAN_DIAJARKAN"=>'05005'));
+//$listNilai= $this->getSiswa($id_kelas,$id_mapel);
+
+if(isset($_POST['selectKelas']) && isset($_POST['selectMapel'])){
+    $kelas = Kelas::model()->findByPk($id_kelas);
+    $listNilai = TNilaiRaporNilai::model()->findAllByAttributes(
+            array("KD_TINGKAT_KELAS" => $kelas->KD_TINGKAT_KELAS,
+                "KD_PROGRAM_PENGAJARAN" => $kelas->KD_PROGRAM_PENGAJARAN,
+                "KD_ROMBEL" => $kelas->KD_ROMBEL,
+                "KD_TAHUN_AJARAN" =>15,
+                "KD_MATA_PELAJARAN_DIAJARKAN"=>$id_mapel,
+                ));
+    for ($index1 = 0; $index1 < count($listNilai); $index1++) {
+        $arr[$index1] = $listNilai[$index1]->NILAI_KOGNITIF;
     }
-}
 
 $flashChart = Yii::createComponent('application.extensions.yiiopenflashchart.EOFC2'); 
 
-$db = mysql_connect('localhost:33066','root','paspass12345') ;
-if (! $db) {
-echo "can not connect to mysql" ;
-exit ;
-}
-
-mysql_select_db("pas_sma");
-// Minimum usage. You will always need at least this.
-
-$criteria = new CDbCriteria();
-//$criteria->select='Nilai_Kognitif';
-$criteria->addInCondition("NIS", $arr);
-$result=  TNilaiRaporNilai::model()->findAll($criteria);
-//s
-
-//$query='';
-////$query='SELECT NILAI_KOGNITIF FROM T_NILAI_RAPOR_NILAI WHERE NIS IN (' . implode(',', $listSiswa->NIS) . ')';
-//$result = mysql_query($query);
 $nilai=array();
 $i=0;
 $a=0;
@@ -98,8 +120,8 @@ $g=0;
 $h=0;
 $j=0;
 $k=0;
-for ($index1 = 0; $index1 < count($result); $index1++) {
-     $nilai[$index1]=$result[$index1]->NILAI_KOGNITIF;
+for ($index1 = 0; $index1 < count($listNilai); $index1++) {
+     $nilai[$index1]=$arr[$index1];
      if($nilai[$index1]<=0&&$nilai[$index1]<=10){
          $a++;
      }
@@ -172,6 +194,7 @@ $flashChart->setTitle('Statistik Nilai');
 $flashChart->renderData('bar_filled');
 $flashChart->render(800, 400);
 //echo $avg['A'];
+}
 ?>
 
 </center>

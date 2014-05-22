@@ -24,5 +24,31 @@ class Controller extends CController
         public $tahunAjaran = "19" ;
         
         public $semester = "2";
+	
+	public	$user = '';
+	public	$profile = '';
+	public $nomorPengguna='';
+	public $namaPengguna='';
+
+	public function getUser()
+	{
+		$user = Yii::app()->user->name;
+		$arr= array();
+		if(!Yii::app()->user->isGuest){
+			$profile = User::model()->findByAttributes(array("username"=>$user));
+            if($profile->profilSiswa==''){
+                $arr[0] = $profile->profilPegawai;
+                $pegawai = TPegawai::model()->findByAttributes(array("NIP"=>$arr[0]));
+                $arr[1] = $pegawai->NM_PEGAWAI;
+            }
+            else{
+                $arr[0] = $profile->profilSiswa;
+                $siswa = Siswa::model()->findByAttributes(array("NIS"=>$arr[0]));
+                $arr[1] = $siswa->NM_SISWA;
+            }
+		}
+
+		return $arr;
+    }
         
 }

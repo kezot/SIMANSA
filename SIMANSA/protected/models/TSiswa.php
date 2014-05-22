@@ -120,7 +120,7 @@ class TSiswa extends CActiveRecord
 			array('ALAMAT', 'length', 'max'=>150),
 			array('RT', 'length', 'max'=>3),
 			array('RW, KD_TINGKAT_KELAS, ALAT_TRANSPORTASI', 'length', 'max'=>2),
-			array('KD_POS, JARAK_SEK, NILAI, KD_AREA', 'length', 'max'=>5),
+			array('KD_POS, JARAK_SEK, NILAI, KD_AREA,', 'default', 'setOnEmpty'=>true, 'value' => null),
 			array('NO_TELP, NO_HP, NO_STL_SMP, NO_SKHUN_SMP', 'length', 'max'=>30),
 			array('PINDAH_ALASAN, DIR_FOTO, EMAIL_PRIBADI', 'length', 'max'=>255),
 			array('NISN', 'length', 'max'=>18),

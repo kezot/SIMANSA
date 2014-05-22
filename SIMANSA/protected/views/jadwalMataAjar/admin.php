@@ -3,7 +3,7 @@
 /* @var $model JadwalMataAjar */
 
 $this->breadcrumbs=array(
-	'Jadwal Mata Ajar'=>array('index'),
+	'Jadwal Mata Ajars'=>array('index'),
 	'Manage',
 );
 
@@ -49,6 +49,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'HARI',
 		'JAM',
 		'MATA_PELAJARAN',
+		'ID',
 		array(
 			'class'=>'CButtonColumn',
 		),

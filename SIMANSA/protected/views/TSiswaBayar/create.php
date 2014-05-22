@@ -1,15 +1,18 @@
-<!--Generated using Gimme CRUD freeware from www.HandsOnCoding.net -->
-<?php
-$this->breadcrumbs=array(
-	'TSiswaBayars'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-	array('label'=>'List TSiswaBayars', 'url'=>array('index')),
-    array('label'=>'Manage TSiswaBayar', 'url'=>array('admin')),
-);
-?>
-
-<h1>Create TSiswaBayar</h1>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <?php
+        echo "sukses";
+        //$this->redirect(array('siswaAbsensi/crud'))
+        ?>
+    </body>
+</html>

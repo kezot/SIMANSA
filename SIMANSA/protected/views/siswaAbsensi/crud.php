@@ -11,6 +11,10 @@ $NISSiswa = $_GET['siswa'];
 $listAbsensi = $this->getAbsen($NISSiswa);
 ?>
 
+
+
+<div id="allformhere"></div>
+
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -24,6 +28,31 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         ?>
                     </h3>
                     <button id="create-user">Buat Baru</button>
+                    <script>
+                        $('#create-user').on('click', function() {
+                            $('#allformhere').empty();
+                            $.post("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=siswaAbsensi/create",
+                                    {nis : "<?php echo $NISSiswa; ?>" },
+                            function(data, status) {
+                                $('#allformhere').append(data);
+                                $('#allformhere' ).dialog( "open" );
+                            });
+                            alert("help");
+                        });
+
+                        $('#allformhere').dialog({
+                            autoOpen: false,
+                            //height: 300,
+                            //width: 350,
+                            modal: true,
+                            close: function() {
+                               // allFields.val("").removeClass("ui-state-error");
+                               document.getElementById('allformhere').innerHTML = "";
+                            }
+                        });
+
+                    </script>
+
                     <div id="formAbsensi" >
                         <form method="post" action="<?php echo htmlspecialchars(Yii::app()->request->baseUrl . "/index.php?r=siswaAbsensi/create"); ?>">
                             <input name ="inputNIS" id="inputNIS" type="hidden" value="<?php echo $NISSiswa; ?>">
@@ -71,76 +100,7 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                             </tr>
                         </thead>
                         <tbody>
-                            <!--tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Default
-                                </td>
-                            </tr>
-                            <tr class="active">
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Approved
-                                </td>
-                            </tr>
-                            <tr class="success">
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    02/04/2012
-                                </td>
-                                <td>
-                                    Declined
-                                </td>
-                            </tr>
-                            <tr class="warning">
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    03/04/2012
-                                </td>
-                                <td>
-                                    Pending
-                                </td>
-                            </tr>
-                            <tr class="danger">
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    04/04/2012
-                                </td>
-                                <td>
-                                    Call in to confirm
-                                </td>
-                            </tr-->
+                            
                             <?php
                             $NISSiswa = $_GET['siswa'];
                             $listAbsensi = $this->getAbsen($NISSiswa);
@@ -165,7 +125,7 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         ' . ($index + 1) . '
                     </td>
                     <td>
-                        ' . $tanggal . '<input type="hidden" value="">
+                        ' . $tanggal . '
                     </td>
                     <td>
                         ' . $kodePerioderBelajar . '
@@ -176,15 +136,23 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                     <td>
                     <button id="button' . ($index + 1) . '">update</button>
                     <script>
-                        $("button' . ($index + 1) . '").click( function()
-                        {
-                            $("#inputTanggal").attr("value", "' . $tanggal . '");
-                        }
-                        );
-                    </script>
+                        $("#button' . ($index + 1) . '").on("click", function() {
+                            $("#allformhere").empty();
+                            $.get("'.Yii::app()->request->baseUrl.'/index.php?r=siswaAbsensi/update",
+                                    {NIS : "'.$NISSiswa.'", TANGGAL: "'.$tanggal.'", KD_TAHUN_AJARAN:"'.$this->tahunAjaran.'" , KD_TINGKAT_KELAS:"'.$siswaTingkat->KD_TINGKAT_KELAS.'" , KD_PROGRAM_PENGAJARAN:"'.$siswaTingkat->KD_PROGRAM_PENGAJARAN.'", KD_ROMBEL:"'.$siswaTingkat->KD_ROMBEL.'"  },
+                            function(data, status) {
+                                $("#allformhere").append(data);
+                                $("#allformhere" ).dialog( "open" );
+                            });
+                            alert("help");
+                        });
+                    </script>';
+                     // $NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL
+                    if(Yii::app()->user->isAdmin())
+                    echo '
                     <a href="' . Yii::app()->request->baseUrl . '/index.php?r=siswaAbsensi/delete&nis=' . $NISSiswa . '&tk=' . $siswaTingkat->KD_TINGKAT_KELAS . '&pp=' . $siswaTingkat->KD_PROGRAM_PENGAJARAN . '&rom=' . $siswaTingkat->KD_ROMBEL . '&tanggal=' . $listAbsensi[$index]->TANGGAL . '"><button>Delete</button>
                     </td>
-                </tr>';
+                    </tr>';
                             }
                             ?>
                         </tbody>

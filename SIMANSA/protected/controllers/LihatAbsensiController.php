@@ -3,10 +3,31 @@
 class LihatAbsensiController extends Controller
 {
 	public $layout='//layouts/column2';
-	public $id = 'lihatabsensi';
+	
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TSiswaAbsensi');
+		// $dataProvider=new CActiveDataProvider('TSiswaAbsensi');
+		// $this->render('index',array(
+		// 	'dataProvider'=>$dataProvider,
+		// ));
+
+		$profile = $this->getUser();
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $profile[0]));
+
+		//$model= TSiswaAbsensi::model()->findByAttributes(array("NIS"=>$id,"KD_TINGKAT_KELAS"=>$siswaTingkat[0]->KD_TINGKAT_KELAS,"KD_PROGRAM_PENGAJARAN"=>$siswaTingkat[0]->KD_PROGRAM_PENGAJARAN,"KD_ROMBEL"=>$siswaTingkat[0]->KD_ROMBEL,"KD_TAHUN_AJARAN"=>$siswaTingkat[0]->KD_TAHUN_AJARAN));
+
+		$criteria = new CDbCriteria(array(                    
+                'order'=>'TANGGAL desc',
+                'condition'=>'NIS='.$siswaTingkat->NIS.' AND KD_TAHUN_AJARAN='.$siswaTingkat->KD_TAHUN_AJARAN.' AND KD_TINGKAT_KELAS='.$siswaTingkat->KD_TINGKAT_KELAS.' AND KD_ROMBEL='.$siswaTingkat->KD_ROMBEL.' AND KD_PROGRAM_PENGAJARAN='.$siswaTingkat->KD_PROGRAM_PENGAJARAN,
+
+        ));
+
+		$dataProvider=new CActiveDataProvider('TSiswaAbsensi', array(
+		            'criteria'=>$criteria,
+		    ));
+
+
+
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -31,88 +52,6 @@ class LihatAbsensiController extends Controller
 				'users'=>array('*'),
 			),
 		);
-	}
-
-	public function actionCreate()
-	{
-	    $model=new TSiswaAbsensi;
-
-	    if(isset($_POST['ajax']) && $_POST['ajax']==='client-account-create-form')
-	    {
-	        echo CActiveForm::validate($model);
-	        Yii::app()->end();
-	    }
-
-	    if(isset($_POST['TSiswaAbsensi']))
-	    {
-	        $model->attributes=$_POST['TSiswaAbsensi'];
-	        if($model->validate())
-	        {
-				$this->saveModel($model);
-				$this->redirect(array('view','NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL));
-	        }
-	    }
-	    $this->render('create',array('model'=>$model));
-	} 
-	
-	public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			try
-			{
-				// we only allow deletion via POST request
-				$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)->delete();
-			}
-			catch(Exception $e) 
-			{
-				$this->showError($e);
-			}
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
-	
-	public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
-	{
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['TSiswaAbsensi']))
-		{
-			$model->attributes=$_POST['TSiswaAbsensi'];
-			$this->saveModel($model);
-			$this->redirect(array('view',
-	                    'NIS'=>$model->NIS, 'KD_TAHUN_AJARAN'=>$model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS'=>$model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN'=>$model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL'=>$model->KD_ROMBEL, 'TANGGAL'=>$model->TANGGAL));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-	
-	public function actionAdmin()
-	{
-		$model=new TSiswaAbsensi('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['TSiswaAbsensi']))
-			$model->attributes=$_GET['TSiswaAbsensi'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-	
-	public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
-	{		
-		$model=$this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL);
-		$this->render('view',array('model'=>$model));
 	}
 	
 	public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL)
