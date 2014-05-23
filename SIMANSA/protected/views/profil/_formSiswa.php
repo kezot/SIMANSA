@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this TSiswaController */
 /* @var $model TSiswa */
@@ -32,7 +33,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_JENIS_KELAMIN'); ?>
-		<?php echo $form->textField($model,'KD_JENIS_KELAMIN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'KD_JENIS_KELAMIN', array(1=>'Laki-Laki', 2=>'Perempuan')); ?>
 		<?php echo $form->error($model,'KD_JENIS_KELAMIN'); ?>
 	</div>
 
@@ -74,13 +75,28 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_GOL_DARAH'); ?>
-		<?php echo $form->textField($model,'KD_GOL_DARAH',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$darah_list = CHtml::listData(RGolDarah::model()->findAll(), 'KD_GOL_DARAH', 'NM_GOL_DARAH');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_GOL_DARAH', $darah_list, $options); ?>
+		
 		<?php echo $form->error($model,'KD_GOL_DARAH'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_AGAMA'); ?>
-		<?php echo $form->textField($model,'KD_AGAMA',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$agama_list = CHtml::listData(RAgama::model()->findAll(), 'KD_AGAMA', 'NM_AGAMA');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_AGAMA', $agama_list, $options); ?>
 		<?php echo $form->error($model,'KD_AGAMA'); ?>
 	</div>
 
@@ -194,13 +210,28 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_TINGKAT_KELAS'); ?>
-		<?php echo $form->textField($model,'KD_TINGKAT_KELAS',array('size'=>2,'maxlength'=>2)); ?>
+		<?php
+			$tk_list = CHtml::listData(RTingkatKelas::model()->findAll(), 'KD_TINGKAT_KELAS', 'NM_TINGKAT_KELAS');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_TINGKAT_KELAS', $tk_list, $options); ?>
 		<?php echo $form->error($model,'KD_TINGKAT_KELAS'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_PROGRAM_PENGAJARAN'); ?>
-		<?php echo $form->textField($model,'KD_PROGRAM_PENGAJARAN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$ajar_list = CHtml::listData(RProgramPengajaran::model()->findAll(), 'KD_PROGRAM_PENGAJARAN', 'NM_PROGRAM_PENGAJARAN');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_PROGRAM_PENGAJARAN', $ajar_list, $options); ?>
+		
 		<?php echo $form->error($model,'KD_PROGRAM_PENGAJARAN'); ?>
 	</div>
 
@@ -278,7 +309,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'JENIS_TINGGAL'); ?>
-		<?php echo $form->textField($model,'JENIS_TINGGAL',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'JENIS_TINGGAL', array(1=>'Bersama Orangtua',2=>'Wali',3=>'Kost',4=>'Asrama',5=>'Panti Asuhan',9=>'Lainnya'));?>
 		<?php echo $form->error($model,'JENIS_TINGGAL'); ?>
 	</div>
 
@@ -314,13 +345,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_JARAK_SEK'); ?>
-		<?php echo $form->textField($model,'KD_JARAK_SEK',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'KD_JARAK_SEK', array(1=>'Kurang dari 1 Km',2=>'Lebih dari 1 Km'));?>
 		<?php echo $form->error($model,'KD_JARAK_SEK'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'ALAT_TRANSPORTASI'); ?>
-		<?php echo $form->textField($model,'ALAT_TRANSPORTASI',array('size'=>2,'maxlength'=>2)); ?>
+		<?php echo $form->dropDownList($model,'ALAT_TRANSPORTASI', array('01'=>'Jalan Kaki','02'=>'Kendaraan Pribadi','03'=>'Kendaraan Umum','04'=>'Jemputan Sekolah','05'=>'Kereta Api','06'=>'Ojek'));?>
 		<?php echo $form->error($model,'ALAT_TRANSPORTASI'); ?>
 	</div>
 

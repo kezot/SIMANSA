@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this TPegawaiController */
 /* @var $model TPegawai */
@@ -45,19 +46,33 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_JENIS_KELAMIN'); ?>
-		<?php echo $form->textField($model,'KD_JENIS_KELAMIN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'KD_JENIS_KELAMIN', array(1=>'Laki-Laki', 2=>'Perempuan')); ?>
 		<?php echo $form->error($model,'KD_JENIS_KELAMIN'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_GOL_DARAH'); ?>
-		<?php echo $form->textField($model,'KD_GOL_DARAH',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$darah_list = CHtml::listData(RGolDarah::model()->findAll(), 'KD_GOL_DARAH', 'NM_GOL_DARAH');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_GOL_DARAH', $darah_list, $options); ?>
 		<?php echo $form->error($model,'KD_GOL_DARAH'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_AGAMA'); ?>
-		<?php echo $form->textField($model,'KD_AGAMA',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$agama_list = CHtml::listData(RAgama::model()->findAll(), 'KD_AGAMA', 'NM_AGAMA');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_AGAMA', $agama_list, $options); ?>
 		<?php echo $form->error($model,'KD_AGAMA'); ?>
 	</div>
 
@@ -87,7 +102,14 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'KD_JENIS_KETENAGAAN'); ?>
-		<?php echo $form->textField($model,'KD_JENIS_KETENAGAAN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php
+			$ketenagaan_list = CHtml::listData(RJenisKetenagaan::model()->findAll(), 'KD_JENIS_KETENAGAAN', 'NM_JENIS_KETENAGAAN');
+			$options = array(
+			        'tabindex' => '0',
+			        'empty' => '(not set)',
+			);
+		?>
+		<?php echo $form->dropDownList($model,'KD_JENIS_KETENAGAAN', $ketenagaan_list, $options); ?>
 		<?php echo $form->error($model,'KD_JENIS_KETENAGAAN'); ?>
 	</div>
 
@@ -201,13 +223,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'STATUS_KEPEGAWAIAN'); ?>
-		<?php echo $form->textField($model,'STATUS_KEPEGAWAIAN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'STATUS_KEPEGAWAIAN', array(1=>'PNS',2=>'PNS Diperbantukan',3=>'PNS Depag',4=>'GTY/PTY',5=>'GTT/PTT Propinsi',6=>'GTT/PTT Kab/Kota',7=>'Guru Bantu Pusat',8=>'Guru Honor Sekolah'));?>
 		<?php echo $form->error($model,'STATUS_KEPEGAWAIAN'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'SERTIFIKASI_JABATAN'); ?>
-		<?php echo $form->textField($model,'SERTIFIKASI_JABATAN',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'SERTIFIKASI_JABATAN', array(1=>'Belum',2=>'Sudah',3=>'Sedang Proses'));?>
 		<?php echo $form->error($model,'SERTIFIKASI_JABATAN'); ?>
 	</div>
 
@@ -237,7 +259,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'LISENSI_KEPALA_SEKOLAH'); ?>
-		<?php echo $form->textField($model,'LISENSI_KEPALA_SEKOLAH',array('size'=>1,'maxlength'=>1)); ?>
+		<?php echo $form->dropDownList($model,'LISENSI_KEPALA_SEKOLAH', array(1=>'Belum',2=>'Sudah'));?>
 		<?php echo $form->error($model,'LISENSI_KEPALA_SEKOLAH'); ?>
 	</div>
 

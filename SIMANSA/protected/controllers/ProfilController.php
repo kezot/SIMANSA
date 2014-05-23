@@ -121,7 +121,7 @@ class ProfilController extends Controller
 	 //        }
 	 //    }
 
-  //   $this->render('changePassword', array('model'=>$model));
+  // $this->render('changePassword', array('model'=>$model));
 		$user = loadModel($id);
 	    if(md5($_POST['User']['old_password']) === $user->password)
 	    {

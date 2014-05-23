@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this TSiswaController */
 /* @var $model TSiswa */
@@ -20,7 +21,7 @@ $this->breadcrumbs=array(
 
 <?php
 
-echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=profil/changePassword&username=' .Yii::app()->user->name. '"><button>Ubah Password</button>';
+echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=user/updatePassword&username=' .Yii::app()->user->name. '"><button>Ubah Password</button>';
 echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=profil/update&id=' . $model->NIS. '"><button>Ubah Profil</button>';
 
 $this->widget('zii.widgets.CDetailView', array(
@@ -30,15 +31,35 @@ $this->widget('zii.widgets.CDetailView', array(
 		'NO_CALSIS',
 		'NM_SISWA',
 		'NM_PANGGILAN',
-		'KD_JENIS_KELAMIN',
+		array(
+			'label'=>'Jenis Kelamin',
+			'value'=>function($model){
+			        if ($model->KD_JENIS_KELAMIN  == 1){
+			            $class = 'Laki-Laki';
+			        }
+			        else if ($model->KD_JENIS_KELAMIN  == 2){
+			            $class = 'Perempuan';
+			        }
+			        else {
+			        	$class = 'Data tidak ada';
+			        }
+			        return $class;
+			    },
+    	),
 		'KOTA_LAHIR',
 		'TANGGAL_LAHIR',
 		'ALAMAT',
 		'RT',
 		'RW',
 		'KD_POS',
-		'KD_GOL_DARAH',
-		'KD_AGAMA',
+		array(
+			'label'=>'Gol. Darah',
+			'value'=>$model->kDGOLDARAH->NM_GOL_DARAH,
+			),
+		array(
+			'label'=>'Agama',
+			'value'=>$model->kDAGAMA->NM_AGAMA,
+			),
 		'NO_TELP',
 		'NO_HP',
 		'STATUS_SISWA',
@@ -49,18 +70,28 @@ $this->widget('zii.widgets.CDetailView', array(
 		'JUMLAH_ANGKAT',
 		'STATUS_YATIM_PIATU',
 		'BAHASA',
-		'TINGGAL_DI',
-		'JARAK_SEK',
 		'KELAINAN_JASMANI',
 		'BERAT_BADAN',
 		'TINGGI_BADAN',
-		'ASAL_SMP',
+		array(
+			'label'=>'Asal SMP',
+			'value'=>(is_null($model->ASAL_SMP))? 'Data tidak ada' : $model->aSALSMP->NM_SEKOLAH,
+			),
 		'NO_STL_SMP',
 		'TANGGAL_STL_SMP',
 		'LAMA_BELAJAR_SMP',
-		'ASAL_SMA',
-		'KD_TINGKAT_KELAS',
-		'KD_PROGRAM_PENGAJARAN',
+		array(
+			'label'=>'Asal SMA',
+			'value'=>(is_null($model->ASAL_SMA))? 'Data tidak ada' : $model->aSALSMA->NM_SEKOLAH,
+			),
+		array(
+			'label'=>'Tingkat Kelas',
+			'value'=>$model->kDTINGKATKELAS->NM_TINGKAT_KELAS,
+			),
+		array(
+			'label'=>'Program Pengajaran',
+			'value'=>$model->kDPROGRAMPENGAJARAN->NM_PROGRAM_PENGAJARAN,
+			),
 		'DITERIMA_TANGGAL',
 		'PINDAH_ALASAN',
 		'HUBUNGI',
@@ -72,22 +103,106 @@ $this->widget('zii.widgets.CDetailView', array(
 		'NO_INDUK',
 		'DIR_FOTO',
 		'STATUS_ENTRI',
-		'KD_JENIS_KETUNAAN',
-		'KD_STATUS_DALAM_KELUARGA',
+		array(
+			'label'=>'Jenis Ketunaan',
+			'value'=> (is_null($model->KD_JENIS_KETUNAAN)) ? 'Data tidak ada' : $model->kDJENISKETUNAAN->NM_JENIS_KETUNAAN,
+			),
+		array(
+			'label'=>'Status Anak',
+			'value'=>function($model){
+			        if ($model->KD_STATUS_DALAM_KELUARGA  == 1){
+			            $class = 'Anak Kandung';
+			        }
+			        else if ($model->KD_STATUS_DALAM_KELUARGA  == 2){
+			            $class = 'Anak Tiri';
+			        }
+			        else if ($model->KD_STATUS_DALAM_KELUARGA  == 3){
+			            $class = 'Anak Angkat';
+			        }
+			        else {
+			        	$class = 'Data tidak ada';
+			        }
+			        return $class;
+			    },
+    	),
 		'TANGGAL_SKHUN_SMP',
 		'NO_SKHUN_SMP',
 		'NISN',
 		'NIK',
-		'JENIS_TINGGAL',
+		array(
+			'label'=>'Tempat Tinggal',
+			'value'=>function($model){
+			        if ($model->JENIS_TINGGAL  == 1){
+			            $class = 'Bersama Orangtua';
+			        }
+			        else if ($model->JENIS_TINGGAL  == 2){
+			            $class = 'Wali';
+			        }
+			        else if ($model->JENIS_TINGGAL  == 3){
+			            $class = 'Kost';
+			        }
+			        else if ($model->JENIS_TINGGAL  == 4){
+			            $class = 'Asrama';
+			        }
+			        else if ($model->JENIS_TINGGAL  == 5){
+			            $class = 'Panti Asuhan';
+			        }
+			        else if ($model->JENIS_TINGGAL  == 9){
+			        	$class = 'Lainnya';
+			        }
+			        else {
+			        	$class = 'Data tidak ada';
+			        }
+			        return $class;
+			    },
+    	),
 		'KELURAHAN_DESA',
 		'KECAMATAN',
 		'KABUPATEN_KOTA',
 		'PROPINSI',
 		'KD_AREA',
-		'KD_JARAK_SEK',
-		'ALAT_TRANSPORTASI',
+		array(
+			'label'=>'Jarak Ke Sekolah',
+			'value'=>function($model){
+			        if ($model->KD_JARAK_SEK  == 1){
+			            $class = 'Kurang dari 1 Km';
+			        }
+			        else if ($model->KD_JARAK_SEK  == 2){
+			            $class = 'Lebih dari 1 Km';
+			        }
+			        else {
+			        	$class = 'Data tidak ada';
+			        }
+			        return $class;
+			    },
+    	),
+		array(
+			'label'=>'Alat Transportasi',
+			'value'=>function($model){
+			        if ($model->ALAT_TRANSPORTASI  == '01'){
+			            $class = 'Jalan Kaki';
+			        }
+			        else if ($model->ALAT_TRANSPORTASI  == '02'){
+			            $class = 'Kendaraan Pribadi';
+			        }
+			        else if ($model->ALAT_TRANSPORTASI  == '03'){
+			            $class = 'Kendaraan Umum';
+			        }
+			        else if ($model->ALAT_TRANSPORTASI  == '04'){
+			            $class = 'Jemputan Sekolah';
+			        }
+			        else if ($model->ALAT_TRANSPORTASI  == '05'){
+			            $class = 'Kereta Api';
+			        }
+			        else if ($model->JENIS_TINGGAL  == '06'){
+			        	$class = 'Ojek';
+			        }
+			        else {
+			        	$class = 'Data tidak ada';
+			        }
+			        return $class;
+			    },
+    	),
 		'EMAIL_PRIBADI',
-		'USERNAME',
-		'TANGGAL_AKSES',
 	),
 )); ?>
