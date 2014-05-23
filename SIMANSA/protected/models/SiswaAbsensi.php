@@ -43,13 +43,16 @@ class SiswaAbsensi extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('NIS', 'length', 'max'=>12),
+			array('NIS', 'length', 'max'=>12,),
+                        array('NIS', 'required'),
 			array('KD_TAHUN_AJARAN, KD_TINGKAT_KELAS', 'length', 'max'=>2),
 			array('KD_PROGRAM_PENGAJARAN, KD_PERIODE_BELAJAR, STATUS_ABSEN', 'length', 'max'=>1),
 			array('KD_ROMBEL', 'length', 'max'=>15),
+                        array('NIS', 'required'),
 			array('KETERANGAN', 'length', 'max'=>255),
 			array('USERNAME', 'length', 'max'=>20),
 			array('TANGGAL_AKSES', 'safe'),
+                        array('TANGGAL', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('NIS, KD_TAHUN_AJARAN, KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL, TANGGAL, KD_PERIODE_BELAJAR, STATUS_ABSEN, KETERANGAN, USERNAME, TANGGAL_AKSES', 'safe', 'on'=>'search'),

@@ -137,7 +137,7 @@ class TSiswaBayarController extends Controller {
              $arr[$index] = $listMurid[$index]->NIS;
          }
 
-         $criteria = new CDbCriteria();
+        $criteria = new CDbCriteria();
         //$criteria->select='Nilai_Kognitif';
         $criteria->addInCondition("NIS", $arr);
         $listSiswa=  Siswa::model()->findAll($criteria);

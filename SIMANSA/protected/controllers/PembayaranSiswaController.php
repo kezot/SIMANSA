@@ -1,8 +1,8 @@
 <?php
 
-class PembayaranSiswaController extends Controller
-{
-	    public $layout = '//layouts/column1';
+class PembayaranSiswaController extends Controller {
+
+    public $layout = '//layouts/column1';
     public $listMurid = array();
 
     public function actionIndex() {
@@ -11,28 +11,8 @@ class PembayaranSiswaController extends Controller
     }
 
     public function actionCrud() {
-        
+
         $this->render('crud');
-    }
-
-    public function deleteData($NIS, $tanggal) {
-        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
-        $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
-        $kodeTingkatKelas = $siswaTingkat->KD_TINGKAT_KELAS;
-        $kodeProgramPengajaran = $siswaTingkat->KD_PROGRAM_PENGAJARAN;
-        $kodeRombel = $siswaTingkat->KD_ROMBEL;
-
-        $sbsen = SiswaAbsensi::model()->deleteByPk(
-                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
-            "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
-            "KD_ROMBEL" => $kodeRombel,
-            "KD_TAHUN_AJARAN" => $tahunAjaran,
-            "NIS"=>$NIS,
-            "TANGGAL"=>$tanggal), array('order' => 'TANGGAL DESC'));
-    }
-
-    public function updateData($primaryKey) {
-        
     }
 
     public function getAbsen($NIS) {
@@ -49,7 +29,7 @@ class PembayaranSiswaController extends Controller
             "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL DESC'));
         return $listAbsen;
     }
-    
+
     public function getPembayaran($NIS) {
         $siswaTingkat = SiswaTingkat::model()->findByAttributes(array("NIS" => $NIS));
         $tahunAjaran = $siswaTingkat->KD_TAHUN_AJARAN;
@@ -102,6 +82,111 @@ class PembayaranSiswaController extends Controller
         return $namaSiswa;
     }
 
+    public function actionCreate() {
+        $model = new SiswaBayar;
+        
+        $NIS;
+        $siswaTingkat;
+        if(!isset($_POST['SiswaBayar'])){
+            $NIS = $_GET['nis'];
+            $tahunAjaran = $this->tahunAjaran;
+            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $tahunAjaran));
+        }
+
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-account-create-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+
+        if (isset($_POST['SiswaBayar'])) {
+            $model->attributes = $_POST['SiswaBayar'];
+            if ($model->validate()) {
+                $this->saveModel($model);
+                $this->redirect(array('crud', 'siswa' => $model->NIS)); //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $model->TANGGAL_BAYAR));
+            }
+        }
+        $this->renderPartial('create', array('model' => $model, 'siswaTingkat' => $siswaTingkat));
+    }
+
+    public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
+        if (Yii::app()->request->isPostRequest) {
+            try {
+                // we only allow deletion via POST request
+                $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)->delete();
+            } catch (Exception $e) {
+                $this->showError($e);
+            }
+
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        } else
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+    }
+
+    public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
+        $model = $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR);
+        
+        $siswaTingkat;
+        if(!isset($_POST['SiswaBayar'])){
+            $tahunAjaran = $this->tahunAjaran;
+            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $tahunAjaran));
+        }
+        
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if (isset($_POST['SiswaBayar'])) {
+            $model->attributes = $_POST['SiswaBayar'];
+            $this->saveModel($model);
+            $this->redirect(array('crud', 'siswa' =>$NIS));
+                //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $model->TANGGAL_BAYAR));
+        }
+
+        $this->render('update', array(
+            'model' => $model, 'siswaTingkat' => $siswaTingkat
+        ));
+    }
+
+    public function actionAdmin() {
+        $model = new SiswaBayar('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['SiswaBayar']))
+            $model->attributes = $_GET['SiswaBayar'];
+
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionView($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
+        $model = $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR);
+        $this->render('view', array('model' => $model));
+    }
+
+    public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
+        $model = SiswaBayar::model()->findByPk(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $TANGGAL_BAYAR));
+        if ($model == null)
+            throw new CHttpException(404, 'The requested data does not exist.');
+        return $model;
+    }
+
+    public function saveModel($model) {
+        try {
+            $model->save();
+        } catch (Exception $e) {
+            $this->showError($e);
+        }
+    }
+
+    function showError(Exception $e) {
+        if ($e->getCode() == 23000)
+            $message = "This operation is not permitted due to an existing foreign key reference.";
+        else
+            $message = "Invalid operation.";
+        throw new CHttpException($e->getCode(), $message);
+    }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
@@ -127,30 +212,30 @@ class PembayaranSiswaController extends Controller
       ),
       );
       }
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+      // Uncomment the following methods and override them if needed
+      /*
+      public function filters()
+      {
+      // return the filter configuration for this controller, e.g.:
+      return array(
+      'inlineFilterName',
+      array(
+      'class'=>'path.to.FilterClass',
+      'propertyName'=>'propertyValue',
+      ),
+      );
+      }
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+      public function actions()
+      {
+      // return external action classes, e.g.:
+      return array(
+      'action1'=>'path.to.ActionClass',
+      'action2'=>array(
+      'class'=>'path.to.AnotherActionClass',
+      'propertyName'=>'propertyValue',
+      ),
+      );
+      }
+     */
 }

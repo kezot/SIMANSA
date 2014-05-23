@@ -52,6 +52,8 @@ class SiswaBayar extends CActiveRecord
 			array('KETERANGAN', 'length', 'max'=>255),
 			array('USERNAME', 'length', 'max'=>20),
 			array('TANGGAL_AKSES', 'safe'),
+                        array('TANGGAL_BAYAR', 'required'),
+                        array('JUMLAH_BAYAR', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('NIS, KD_TAHUN_AJARAN, KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL, ID_PEMBAYARAN_SISWA, TANGGAL_BAYAR, JUMLAH_BAYAR, KETERANGAN, USERNAME, TANGGAL_AKSES', 'safe', 'on'=>'search'),

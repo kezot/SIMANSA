@@ -1,3 +1,5 @@
+
+
 div.form #loginLogin {
     text-align: center;
 }
@@ -59,12 +61,42 @@ div.form input[type=submit], div.form input[type=button]{
     -o-user-select: none;
     user-select: none;
     color: #333;
-    background-color: #ccc;
+    background-color: #7fc6ed;
     border-color: #ccc;
 }
 
 #allformhere {
-    background: rgba(54, 25, 25, .5);
+    background: #ccc;
     border-color: #999999;
+    color: #5f0482;
+    border-style: groove;
+    border-width: 1px;
 }
+
+button, form input[type=submit] {
+    display: inline-block;
+    width: 80px;
+    height: 34px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    color: #333;
+    background-color: #7fc6ed;
+    border-color: #ccc;
+}
+
 

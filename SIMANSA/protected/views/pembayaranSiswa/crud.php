@@ -10,6 +10,8 @@ and open the template in the editor.
 $NISSiswa = $_GET['siswa'];
 $listAbsensi = $this->getAbsen($NISSiswa);
 ?>
+
+<div id="allformhere"></div>
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -32,6 +34,31 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         echo "$namaSiswa"
                         ?>
                     </h3>
+                    <button id="create-user">Buat Baru</button>
+                    <script>
+                        $('#create-user').on('click', function() {
+                            $('#allformhere').empty();
+                            $.get("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=pembayaranSiswa/create",
+                                    {nis: "<?php echo $NISSiswa; ?>"},
+                            function(data, status) {
+                                $('#allformhere').append(data);
+                                $('#allformhere').dialog("open");
+                            });
+                            alert("help");
+                        });
+
+                        $('#allformhere').dialog({
+                            autoOpen: false,
+                            //height: 300,
+                            //width: 350,
+                            modal: true,
+                            close: function() {
+                                // allFields.val("").removeClass("ui-state-error");
+                                document.getElementById('allformhere').innerHTML = "";
+                            }
+                        });
+
+                    </script>
                     <table class="table">
                         <thead>
                             <tr>
@@ -53,84 +80,14 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                             </tr>
                         </thead>
                         <tbody>
-                            <!--tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Default
-                                </td>
-                            </tr>
-                            <tr class="active">
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    01/04/2012
-                                </td>
-                                <td>
-                                    Approved
-                                </td>
-                            </tr>
-                            <tr class="success">
-                                <td>
-                                    2
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    02/04/2012
-                                </td>
-                                <td>
-                                    Declined
-                                </td>
-                            </tr>
-                            <tr class="warning">
-                                <td>
-                                    3
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    03/04/2012
-                                </td>
-                                <td>
-                                    Pending
-                                </td>
-                            </tr>
-                            <tr class="danger">
-                                <td>
-                                    4
-                                </td>
-                                <td>
-                                    TB - Monthly
-                                </td>
-                                <td>
-                                    04/04/2012
-                                </td>
-                                <td>
-                                    Call in to confirm
-                                </td>
-                            </tr-->
                             <?php
                             $NISSiswa = $_GET['siswa'];
                             $listPembayaran = $this->getPembayaran($NISSiswa);
                             for ($index = 0; $index < count($listPembayaran); $index++) {
                                 $tanggalPembayaran = $listPembayaran[$index]->TANGGAL_BAYAR;
-                                $tujuanPembayaran = RPembayaranSiswa::model()->findByPk( $listPembayaran[$index]->ID_PEMBAYARAN_SISWA)->NM_PEMBAYARAN_SISWA;
+                                $tujuanPembayaran = RPembayaranSiswa::model()->findByPk($listPembayaran[$index]->ID_PEMBAYARAN_SISWA)->NM_PEMBAYARAN_SISWA;
                                 $jumlahPembayaran = (float) $listPembayaran[$index]->JUMLAH_BAYAR;
-                                
+
                                 echo '<tr>
                     <td>
                         ' . ($index + 1) . '
@@ -145,9 +102,24 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         ' . $jumlahPembayaran . '
                     </td>
                     <td>
-                    <a href="">Delete
-                    </td>
-                </tr>';
+                    <button id="button' . ($index + 1) . '">update</button>
+                    <script>
+                        $("#button' . ($index + 1) . '").on("click", function() {
+                            $("#allformhere").empty();
+                            $.post("' . Yii::app()->request->baseUrl . '/index.php?r=pembayaranSiswa/update",
+                                    {NIS: ' . $listPembayaran[$index]->NIS . ', KD_TAHUN_AJARAN: ' . $listPembayaran[$index]->KD_TAHUN_AJARAN . ', KD_TINGKAT_KELAS: ' . $listPembayaran[$index]->KD_TINGKAT_KELAS . ', KD_PROGRAM_PENGAJARAN: ' . $listPembayaran[$index]->KD_PROGRAM_PENGAJARAN . ', KD_ROMBEL: ' . $listPembayaran[$index]->KD_ROMBEL . ', ID_PEMBAYARAN_SISWA: ' . $listPembayaran[$index]->ID_PEMBAYARAN_SISWA . ', TANGGAL_BAYAR: ' . $listPembayaran[$index]->TANGGAL_BAYAR. '},
+                            function(data, status) {
+                                $("#allformhere").append(data);
+                                $("#allformhere" ).dialog( "open" );
+                            });
+                            alert("help");
+                        });
+                    </script>';
+                                //$NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR
+
+                                echo '<a href="">Delete
+                            </td>
+                            </tr>';
                             }
                             ?>
                         </tbody>

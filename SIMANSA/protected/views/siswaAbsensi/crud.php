@@ -31,7 +31,7 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                     <script>
                         $('#create-user').on('click', function() {
                             $('#allformhere').empty();
-                            $.post("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=siswaAbsensi/create",
+                            $.get("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=siswaAbsensi/create",
                                     {nis : "<?php echo $NISSiswa; ?>" },
                             function(data, status) {
                                 $('#allformhere').append(data);
@@ -53,32 +53,7 @@ $listAbsensi = $this->getAbsen($NISSiswa);
 
                     </script>
 
-                    <div id="formAbsensi" >
-                        <form method="post" action="<?php echo htmlspecialchars(Yii::app()->request->baseUrl . "/index.php?r=siswaAbsensi/create"); ?>">
-                            <input name ="inputNIS" id="inputNIS" type="hidden" value="<?php echo $NISSiswa; ?>">
-                            <input name ="inputTahunAjaran" id="inputTahunAjaran" type="hidden" value="<?php echo $this->tahunAjaran; ?>">
-                            <input name ="inputTingkatKelas" id="inputTingkatKelas" type="hidden" value="<?php echo $siswaTingkat->KD_TINGKAT_KELAS; ?>">
-                            <input name ="inputProgramPengajaran" id="inputProgramPengajaran" type="hidden" value="<?php echo $siswaTingkat->KD_PROGRAM_PENGAJARAN; ?>">
-                            <input name ="inputRombel" id="inputRombel" type="hidden" value="<?php echo $siswaTingkat->KD_ROMBEL ?>">
-                            <input type="date" id="inputTanggal" name="inputTanggal">
-                            <select name="inputSemester" id="inputSemester">
-                                <option>Silahkan Pilih</option>
-                                <option value="1">Ganjil</option>
-                                <option value="2">Genap</option>
-                            </select>
-                            <select name="inputStatus" id="inputStatus">
-                                <option>Silahkan Pilih</option>
-                                <option value="1">Alfa</option>
-                                <option value="2">Izin</option>
-                                <option value="3">Sakit</option>
-                            </select>
-                            <input name="inputUsername" id="inputUsername" type="hidden" value="<?php Yii::app()->user->name ?>">
-                            <input type="submit" id ="inputAbsen"  value="insert">
-                        </form>
-                        <script>
-
-                        </script>
-                    </div>
+                    
                     <table class="table">
                         <thead>
                             <tr>
@@ -139,7 +114,7 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         $("#button' . ($index + 1) . '").on("click", function() {
                             $("#allformhere").empty();
                             $.get("'.Yii::app()->request->baseUrl.'/index.php?r=siswaAbsensi/update",
-                                    {NIS : "'.$NISSiswa.'", TANGGAL: "'.$tanggal.'", KD_TAHUN_AJARAN:"'.$this->tahunAjaran.'" , KD_TINGKAT_KELAS:"'.$siswaTingkat->KD_TINGKAT_KELAS.'" , KD_PROGRAM_PENGAJARAN:"'.$siswaTingkat->KD_PROGRAM_PENGAJARAN.'", KD_ROMBEL:"'.$siswaTingkat->KD_ROMBEL.'"  },
+                                    {NIS : "'.$listAbsensi[$index]->NIS.'", TANGGAL: "'.$listAbsensi[$index]->TANGGAL.'", KD_TAHUN_AJARAN:"'.$listAbsensi[$index]->KD_TAHUN_AJARAN.'" , KD_TINGKAT_KELAS:"'.$listAbsensi[$index]->KD_TINGKAT_KELAS.'" , KD_PROGRAM_PENGAJARAN:"'.$listAbsensi[$index]->KD_PROGRAM_PENGAJARAN.'", KD_ROMBEL:"'.$listAbsensi[$index]->KD_ROMBEL.'"  },
                             function(data, status) {
                                 $("#allformhere").append(data);
                                 $("#allformhere" ).dialog( "open" );

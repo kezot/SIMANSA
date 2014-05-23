@@ -24,6 +24,8 @@ $this->pageTitle = Yii::app()->name . ' - Login';
 
         <div class="row clearfix">
             <div class="col-md-11 column">
+                
+                
                 <div class="carousel slide" id="carousel-562730">
                     <ol class="carousel-indicators">
                         <li class="active" data-slide-to="0" data-target="#carousel-562730">

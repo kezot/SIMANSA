@@ -5,25 +5,15 @@ class SiswaAbsensiController extends Controller {
     public $layout = '//layouts/column1';
     public $listMurid = array();
 
+    
     public function actionIndex() {
         $dataProvider = new CActiveDataProvider('SiswaAbsensi');
         $this->render('index', array('dataProvider' => $dataProvider));
     }
 
     public function actionCrud() {
-        $nis = "";
-        $tanggal = "";
-        if (isset($_GET['siswa']) && isset($_GET['tanggal'])) {
-            $nis = $_GET['siswa'];
-            $tanggal = $_GET['tanggal'];
-        }
-        echo $nis;
-        echo $tanggal;
-        if (isset($_GET['runFunction']) && function_exists($_GET['runFunction']))
-            $this->deleteData($nis, $tanggal);
-        else
-        //echo "Function not found or wrong input";
-            $this->render('crud');
+        
+             $this->render('crud');
     }
 
 //   
@@ -48,7 +38,7 @@ class SiswaAbsensiController extends Controller {
         $NIS;
         $siswaTingkat;
         if (!isset($_POST['SiswaAbsensi'])) {
-            $NIS = $_POST['nis'];
+            $NIS = $_GET['nis'];
             $tahunAjaran = $this->tahunAjaran;
             $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $tahunAjaran));
         }
@@ -64,11 +54,11 @@ class SiswaAbsensiController extends Controller {
             //$model->TANGGAL = date('m/d/Y');
             $model->attributes = $_POST['SiswaAbsensi'];
             if ($model->validate()) {
-                $lala = strtotime($model->TANGGAL);
-                echo var_dump($lala);
                 //$model->TANGGAL = date('Y-m-d', strtotime($model->TANGGAL));
+                //$this->saveModel($model);
+                //$model->TANGGAL = CDateTimeParser::parse($model->TANGGAL, 'yyyy-MM-dd');
+                $model->save();
                 $this->saveModel($model);
-                //$model->save();
                 $this->redirect(array('crud', 'siswa' => $model->NIS)); //, 'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'TANGGAL' => $model->TANGGAL));
             }
         }
@@ -89,8 +79,8 @@ class SiswaAbsensiController extends Controller {
         if (isset($_POST['SiswaAbsensi'])) {
             $model->attributes = $_POST['SiswaAbsensi'];
             $this->saveModel($model);
-            $this->redirect(array('view',
-                'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'TANGGAL' => $model->TANGGAL));
+            $this->redirect(array('crud', 'siswa'=> $model->NIS));
+                //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'TANGGAL' => $model->TANGGAL));
         }
 
         $this->renderPartial('update', array(
@@ -153,7 +143,7 @@ class SiswaAbsensiController extends Controller {
     public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $TANGGAL) {
         $model = SiswaAbsensi::model()->findByPk(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $KD_ROMBEL, 'TANGGAL' => $TANGGAL));
         if ($model == null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'The requested data does not exist.');
         return $model;
     }
 
@@ -162,7 +152,7 @@ class SiswaAbsensiController extends Controller {
             $model->save();
         } catch (Exception $e) {
 
-            //$this->showError($e);
+            $this->showError($e);
         }
     }
 
@@ -173,7 +163,8 @@ class SiswaAbsensiController extends Controller {
             $message = 'Invalid operation.';
         throw new CHttpException($e->getCode(), $message);
     }
-
+    
+   
     // if $date = '05/10/2013' (mm-dd-yyyy) e.g.
     // Uncomment the following methods and override them if needed
     /*
