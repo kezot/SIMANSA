@@ -9,6 +9,7 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
+    
 )); ?>
 
 	<div class="row">
@@ -29,11 +30,6 @@
 	<div class="row">
 		<?php echo $form->label($model,'MATA_PELAJARAN'); ?>
 		<?php echo $form->textField($model,'MATA_PELAJARAN',array('size'=>50,'maxlength'=>50)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'ID'); ?>
-		<?php echo $form->textField($model,'ID'); ?>
 	</div>
 
 	<div class="row buttons">
