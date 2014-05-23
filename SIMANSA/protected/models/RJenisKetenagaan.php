@@ -1,25 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "r_jenis_ketenagaan".
  *
- * The followings are the available columns in table 'user':
- * @property integer $id
- * @property string $username
- * @property string $password
- * @property integer $level
+ * The followings are the available columns in table 'r_jenis_ketenagaan':
+ * @property string $KD_JENIS_KETENAGAAN
+ * @property string $NM_JENIS_KETENAGAAN
+ * @property string $SLTP
+ * @property string $PMU
+ * @property string $PMK
+ *
+ * The followings are the available model relations:
+ * @property RPenataran[] $rPenatarans
+ * @property TPegawai[] $tPegawais
  */
-class User extends CActiveRecord
+class RJenisKetenagaan extends CActiveRecord
 {
-	public $old_password;
-	public $new_password;
-  	public $new_password_repeat;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user';
+		return 'r_jenis_ketenagaan';
 	}
 
 	/**
@@ -30,17 +32,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('level', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>50),
-			array('password', 'length', 'max'=>20),
+			array('KD_JENIS_KETENAGAAN, SLTP, PMU, PMK', 'length', 'max'=>1),
+			array('NM_JENIS_KETENAGAAN', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, level', 'safe', 'on'=>'search'),
-
-			array('new_password', 'length', 'max'=>20),
-		    array('new_password', 'compare', 'on'=>'insert, changePassword'),
-		    array('new_password_repeat', 'safe'),
-		    array('new_password, new_password_repeat', 'required', 'on'=>'insert'),
+			array('KD_JENIS_KETENAGAAN, NM_JENIS_KETENAGAAN, SLTP, PMU, PMK', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +48,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'rPenatarans' => array(self::HAS_MANY, 'RPenataran', 'KD_JENIS_KETENAGAAN'),
+			'tPegawais' => array(self::HAS_MANY, 'TPegawai', 'KD_JENIS_KETENAGAAN'),
 		);
 	}
 
@@ -61,19 +59,14 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'level' => 'Level',
+			'KD_JENIS_KETENAGAAN' => 'Kd Jenis Ketenagaan',
+			'NM_JENIS_KETENAGAAN' => 'Nm Jenis Ketenagaan',
+			'SLTP' => 'Sltp',
+			'PMU' => 'Pmu',
+			'PMK' => 'Pmk',
 		);
 	}
 
-
-	public function hashPassword($password, $salt)
-	{
-	  return md5($salt.$password);
-	}
-	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -92,35 +85,25 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('level',$this->level);
+		$criteria->compare('KD_JENIS_KETENAGAAN',$this->KD_JENIS_KETENAGAAN,true);
+		$criteria->compare('NM_JENIS_KETENAGAAN',$this->NM_JENIS_KETENAGAAN,true);
+		$criteria->compare('SLTP',$this->SLTP,true);
+		$criteria->compare('PMU',$this->PMU,true);
+		$criteria->compare('PMK',$this->PMK,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-        
-        public function validatePassword($pass){
-            return $pass == $this->password;
-        }
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return RJenisKetenagaan the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function afterValidate()
-	{
-	  parent::afterValidate();
-	  if ($this->getScenario() === 'insert')
-	    $this->password = $this->new_password;
 	}
 }

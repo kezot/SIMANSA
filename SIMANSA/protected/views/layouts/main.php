@@ -123,9 +123,20 @@
                             } else {
                                 echo '<li>';
                             }
-                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=tSiswaBayar">Pembayaran</a>
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=pembayaranSiswa">Pembayaran</a>
                                         </li>';
                         }
+                        
+                        if (Yii::app()->user->isAdmin()) {
+                            if (Yii::app()->controller->id == 'pengumumanakademik') {
+                                echo '<li class="active">';
+                            } else {
+                                echo '<li>';
+                            }
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php?r=pengumumanAkademik">Pengumuman Akademik</a>
+                                        </li>';
+                        }
+                        
                         if (Yii::app()->user->isPiket()) {
                             if (Yii::app()->controller->id == 'absensi') {
                                 echo '<li class="active">';

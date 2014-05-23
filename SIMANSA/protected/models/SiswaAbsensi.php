@@ -53,6 +53,7 @@ class SiswaAbsensi extends CActiveRecord
 			array('USERNAME', 'length', 'max'=>20),
 			array('TANGGAL_AKSES', 'safe'),
                         array('TANGGAL', 'required'),
+                        //array('TANGGAL', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('NIS, KD_TAHUN_AJARAN, KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL, TANGGAL, KD_PERIODE_BELAJAR, STATUS_ABSEN, KETERANGAN, USERNAME, TANGGAL_AKSES', 'safe', 'on'=>'search'),

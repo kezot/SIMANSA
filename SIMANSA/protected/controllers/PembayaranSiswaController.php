@@ -38,7 +38,8 @@ class PembayaranSiswaController extends Controller {
         $kodeRombel = $siswaTingkat->KD_ROMBEL;
 
         $listPembayaran = SiswaBayar::model()->findAllByAttributes(
-                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
+                array("NIS" => $NIS,
+            "KD_TINGKAT_KELAS" => $kodeTingkatKelas,
             "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
             "KD_ROMBEL" => $kodeRombel,
             "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL_BAYAR DESC'));
@@ -84,10 +85,10 @@ class PembayaranSiswaController extends Controller {
 
     public function actionCreate() {
         $model = new SiswaBayar;
-        
+
         $NIS;
         $siswaTingkat;
-        if(!isset($_POST['SiswaBayar'])){
+        if (!isset($_POST['SiswaBayar'])) {
             $NIS = $_GET['nis'];
             $tahunAjaran = $this->tahunAjaran;
             $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $tahunAjaran));
@@ -100,6 +101,7 @@ class PembayaranSiswaController extends Controller {
 
         if (isset($_POST['SiswaBayar'])) {
             $model->attributes = $_POST['SiswaBayar'];
+            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN));
             if ($model->validate()) {
                 $this->saveModel($model);
                 $this->redirect(array('crud', 'siswa' => $model->NIS)); //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $model->TANGGAL_BAYAR));
@@ -109,41 +111,39 @@ class PembayaranSiswaController extends Controller {
     }
 
     public function actionDelete($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
-        if (Yii::app()->request->isPostRequest) {
-            try {
-                // we only allow deletion via POST request
-                $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)->delete();
-            } catch (Exception $e) {
-                $this->showError($e);
-            }
+        echo "lalalal";
+        echo 'masuk qaqa';
+        // we only allow deletion via POST request
+        $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR)->delete();
+        $this->render('crud', array('siswa' => $NIS));
 
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-        } else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        //if (!isset($_GET['ajax']))
+        //    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        //throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
     public function actionUpdate($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
+        //$model = SiswaBayar::model()->findByPk(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $TANGGAL_BAYAR));
         $model = $this->loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR);
-        
-        $siswaTingkat;
-        if(!isset($_POST['SiswaBayar'])){
-            $tahunAjaran = $this->tahunAjaran;
-            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $tahunAjaran));
-        }
-        
+        //var_dump($model);
+        //return;
+        $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $KD_TAHUN_AJARAN));
+
+
         // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        //$this->performAjaxValidation($model);
 
         if (isset($_POST['SiswaBayar'])) {
             $model->attributes = $_POST['SiswaBayar'];
             $this->saveModel($model);
-            $this->redirect(array('crud', 'siswa' =>$NIS));
-                //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $model->TANGGAL_BAYAR));
+            $this->redirect(array('crud', 'siswa' => $NIS));
+            //'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $model->ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $model->TANGGAL_BAYAR));
         }
 
-        $this->render('update', array(
+
+
+        $this->renderPartial('update', array(
             'model' => $model, 'siswaTingkat' => $siswaTingkat
         ));
     }
@@ -166,8 +166,8 @@ class PembayaranSiswaController extends Controller {
 
     public function loadModel($NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR) {
         $model = SiswaBayar::model()->findByPk(array('NIS' => $NIS, 'KD_TAHUN_AJARAN' => $KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $KD_ROMBEL, 'ID_PEMBAYARAN_SISWA' => $ID_PEMBAYARAN_SISWA, 'TANGGAL_BAYAR' => $TANGGAL_BAYAR));
-        if ($model == null)
-            throw new CHttpException(404, 'The requested data does not exist.');
+        //if ($model == null)
+        //    throw new CHttpException(404, 'The requested data does not exist.');
         return $model;
     }
 

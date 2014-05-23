@@ -33,7 +33,7 @@ class UserController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','updatePassword'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -104,6 +104,58 @@ class UserController extends Controller
 		));
 	}
 
+	public function actionUpdatePassword($username)
+	{
+		$user = User::model()->findByAttributes(array('username' => $username));
+
+		$model=$this->loadModel($user->id);
+		if(isset($_POST['User']))
+		{
+		$model->attributes=$_POST['User'];
+
+		// if a new password has been entered
+		if ($model->new_password !== '') {
+		  // set scenario 'changePassword' in order 
+		  // for the compare validator to be called
+		  $model->setScenario('changePassword');
+		}
+
+		if ($model->validate())
+		{
+		  if ($model->new_password !== '') {
+		    $model->password = $model->new_password;
+		  }
+		  
+		  // the validation has already been done, skipping it with save(false):
+		  if($model->save(false))
+		    $this->redirect(array('profil/index'));
+		}
+	  }
+
+	  $this->render('updatePassword',array(
+	    'model'=>$model,
+	  ));
+	}
+
+	// public function actionUpdatePassword($username)
+ //    {  
+ //    	$user1 = User::model()->findByAttributes(array('username' => $username));
+
+	//     $user = $this->loadModel($user1->id);
+	//     if(md5($_POST['User']['password']) == $user1->password && $_POST['User']['new_password'] == $_POST['User']['new_password_repeat'])
+	//     {
+	//        $user->setScenario('changePassword');
+	//        $user->attributes = $_POST['User'];                
+	//        $user->password = md5($_POST['User']['new_password']);
+	//        if($user->save())
+	//          Yii::app()->user->setFlash('passChanged', 'Your password has been changed <strong>successfully</strong>.');
+	//     }            
+	//     else
+	//     {
+	//       Yii::app()->user->setFlash('passChangeError', 'Your password was not changed because it did not matched the <strong>old password</strong>.');                    
+	//     }  
+ // }
+
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -143,6 +195,7 @@ class UserController extends Controller
 			'model'=>$model,
 		));
 	}
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

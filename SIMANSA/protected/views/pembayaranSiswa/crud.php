@@ -102,12 +102,12 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         ' . $jumlahPembayaran . '
                     </td>
                     <td>
-                    <button id="button' . ($index + 1) . '">update</button>
+                    <button id="button' . ($index + 1) . '">Update</button>
                     <script>
                         $("#button' . ($index + 1) . '").on("click", function() {
                             $("#allformhere").empty();
-                            $.post("' . Yii::app()->request->baseUrl . '/index.php?r=pembayaranSiswa/update",
-                                    {NIS: ' . $listPembayaran[$index]->NIS . ', KD_TAHUN_AJARAN: ' . $listPembayaran[$index]->KD_TAHUN_AJARAN . ', KD_TINGKAT_KELAS: ' . $listPembayaran[$index]->KD_TINGKAT_KELAS . ', KD_PROGRAM_PENGAJARAN: ' . $listPembayaran[$index]->KD_PROGRAM_PENGAJARAN . ', KD_ROMBEL: ' . $listPembayaran[$index]->KD_ROMBEL . ', ID_PEMBAYARAN_SISWA: ' . $listPembayaran[$index]->ID_PEMBAYARAN_SISWA . ', TANGGAL_BAYAR: ' . $listPembayaran[$index]->TANGGAL_BAYAR. '},
+                            $.get("' . Yii::app()->request->baseUrl . '/index.php?r=pembayaranSiswa/update",
+                                    {NIS: "' . $listPembayaran[$index]->NIS . '", KD_TAHUN_AJARAN: "' . $listPembayaran[$index]->KD_TAHUN_AJARAN . '", KD_TINGKAT_KELAS: "' . $listPembayaran[$index]->KD_TINGKAT_KELAS . '", KD_PROGRAM_PENGAJARAN: "' . $listPembayaran[$index]->KD_PROGRAM_PENGAJARAN . '", KD_ROMBEL: "' . $listPembayaran[$index]->KD_ROMBEL . '", ID_PEMBAYARAN_SISWA:"' . $listPembayaran[$index]->ID_PEMBAYARAN_SISWA . '" , TANGGAL_BAYAR:"' . $listPembayaran[$index]->TANGGAL_BAYAR . '"},
                             function(data, status) {
                                 $("#allformhere").append(data);
                                 $("#allformhere" ).dialog( "open" );
@@ -116,10 +116,27 @@ $listAbsensi = $this->getAbsen($NISSiswa);
                         });
                     </script>';
                                 //$NIS, $KD_TAHUN_AJARAN, $KD_TINGKAT_KELAS, $KD_PROGRAM_PENGAJARAN, $KD_ROMBEL, $ID_PEMBAYARAN_SISWA, $TANGGAL_BAYAR
+                                if (Yii::app()->user->isAdmin()) {
+                                    echo '<button id="button' . ($index + 1) . 'del">Delete</button>
+                                <script>     
 
-                                echo '<a href="">Delete
-                            </td>
-                            </tr>';
+                                
+                                $("#button' . ($index + 1) . 'del").on("click", function() {
+                                    if(!confirm("Kamu yakin")){
+                                    return;}
+                                    
+                            $.get("' . Yii::app()->request->baseUrl . '/index.php?r=pembayaranSiswa/delete",
+                                    {NIS: "' . $listPembayaran[$index]->NIS . '", KD_TAHUN_AJARAN: "' . $listPembayaran[$index]->KD_TAHUN_AJARAN . '", KD_TINGKAT_KELAS: "' . $listPembayaran[$index]->KD_TINGKAT_KELAS . '", KD_PROGRAM_PENGAJARAN: "' . $listPembayaran[$index]->KD_PROGRAM_PENGAJARAN . '", KD_ROMBEL: "' . $listPembayaran[$index]->KD_ROMBEL . '", ID_PEMBAYARAN_SISWA:"' . $listPembayaran[$index]->ID_PEMBAYARAN_SISWA . '" , TANGGAL_BAYAR:"' . $listPembayaran[$index]->TANGGAL_BAYAR . '"},
+                            function(data, status) {
+                                //$("#allformhere").append(data);
+                                //$("#allformhere" ).dialog( "open" );
+                                alert(status);
+                            });
+                            window.location.reload();
+                            alert("help");
+                                });
+                                </script>';
+                                }
                             }
                             ?>
                         </tbody>

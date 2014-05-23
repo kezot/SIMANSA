@@ -1,6 +1,6 @@
 <?php
 
-class JadwalMataAjarController extends Controller
+class PengumumanAkademikController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class JadwalMataAjarController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -60,32 +60,33 @@ class JadwalMataAjarController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
-	{
-		$kelas;
-		$jadwal;
-		if (!isset($_POST['JadwalMataAjar'])) {
-		    $kelas = $_GET['NAMA_KELAS'];
-		}
+	public function actionCreate() {
 
-		$model = new JadwalMataAjar;
+        $model = new PengumumanAkademik;
 
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-account-create-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
 
-        if (isset($_POST['JadwalMataAjar'])) {
+        if (isset($_POST['PengumumanAkademik'])) {
             //$model->TANGGAL = date('m/d/Y');
-            $model->attributes = $_POST['JadwalMataAjar'];
+            $model->attributes = $_POST['PengumumanAkademik'];
             if ($model->validate()) {
                 //$model->TANGGAL = date('Y-m-d', strtotime($model->TANGGAL));
-                //$this->saveModel($model);
-                $model->save();
-                $this->redirect(array('JadwalMataAjar/index', 'id_kelas'=>$model->NAMA_KELAS)); //, 'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'TANGGAL' => $model->TANGGAL));
+                $this->saveModel($model);
+                //$model->save();
+                $this->redirect(array('index')); //, 'NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN, 'KD_TINGKAT_KELAS' => $model->KD_TINGKAT_KELAS, 'KD_PROGRAM_PENGAJARAN' => $model->KD_PROGRAM_PENGAJARAN, 'KD_ROMBEL' => $model->KD_ROMBEL, 'TANGGAL' => $model->TANGGAL));
             }
         }
-        $this->renderPartial('create', array('model' => $model, 'kelas'=>$kelas));
+        $this->renderPartial('create', array('model' => $model));
+    }
+
+	public function getPengumuman()
+	{
+		$listPengumuman = PengumumanAkademik::model()->findAll();
+
+		return $listPengumuman;
 	}
 
 	/**
@@ -93,37 +94,35 @@ class JadwalMataAjarController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-		public function actionUpdate($NAMA_KELAS, $HARI, $JAM)
-		{
-			$model = $this->loadModel($NAMA_KELAS, $HARI, $JAM);
-	       	$jadwal;
-	        if (!isset($_POST['JadwalMataAjar'])) {
-	            $jadwal = JadwalMataAjar::model()->findByAttributes(array('NAMA_KELAS' => $NAMA_KELAS, 'HARI' => $HARI, 'JAM' => $JAM));
-	        }
-	        
-	        if (isset($_POST['JadwalMataAjar'])) {
-	            $model->attributes = $_POST['JadwalMataAjar'];
-	            $this->saveModel($model);
-	            $this->redirect(array('JadwalMataAjar/index', 'id_kelas'=>$model->NAMA_KELAS));
-	        }
+	public function actionUpdate($id)
+	{
+		$model=$this->loadModel($id);
 
-	        $this->renderPartial('update', array(
-	            'model' => $model, 'kelas' => $jadwal->NAMA_KELAS, 'hari' => $jadwal->HARI, 'jam' => $jadwal->JAM
-	        ));
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['PengumumanAkademik']))
+		{
+			$model->attributes=$_POST['PengumumanAkademik'];
+			$this->saveModel($model);
+			$this->redirect(array('pengumumanAkademik/index'));
 		}
+
+		$this->renderPartial('update', array(
+        'model' => $model
+        ));
+	}
 
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($NAMA_KELAS, $HARI, $JAM)
+	public function actionDelete($id)
 	{
-		$this->loadModel($NAMA_KELAS, $HARI, $JAM)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		$id = $_GET['id'];
+        $this->loadModel($id)->delete();
+        $this->redirect(array('/pengumumanAkademik/index'));
 	}
 
 	/**
@@ -131,7 +130,7 @@ class JadwalMataAjarController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('JadwalMataAjar');
+		$dataProvider=new CActiveDataProvider('PengumumanAkademik');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -142,38 +141,26 @@ class JadwalMataAjarController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new JadwalMataAjar('search');
+		$model=new PengumumanAkademik('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['JadwalMataAjar']))
-			$model->attributes=$_GET['JadwalMataAjar'];
+		if(isset($_GET['PengumumanAkademik']))
+			$model->attributes=$_GET['PengumumanAkademik'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
 	}
 
-	public function listKelas() {
-	    $kelas = Kelas::model()->findAll(array('order' => 'KD_TINGKAT_KELAS, KD_PROGRAM_PENGAJARAN, KD_ROMBEL'));
-	    return $kelas;
-	}
-
-	public function getJadwal($id_kelas) {
-	    $kelas = Kelas::model()->findByPk($id_kelas);
-	    $listJadwal = JadwalMataAjar::model()->findAllByAttributes(
-	            array("NAMA_KELAS" => $kelas->KD_KELAS));
-	    return $listJadwal;
-	}
-
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return JadwalMataAjar the loaded model
+	 * @return PengumumanAkademik the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($NAMA_KELAS, $HARI, $JAM)
+	public function loadModel($id)
 	{
-		$model=JadwalMataAjar::model()->findByPk(array('NAMA_KELAS'=>$NAMA_KELAS, 'HARI'=>$HARI, 'JAM'=>$JAM));
+		$model=PengumumanAkademik::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -184,28 +171,20 @@ class JadwalMataAjarController extends Controller
             $model->save();
         } catch (Exception $e) {
 
-            $this->showError($e);
+            //$this->showError($e);
         }
     }
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param JadwalMataAjar $model the model to be validated
+	 * @param PengumumanAkademik $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='jadwal-mata-ajar-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='pengumuman-akademik-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
-
-	function showError(Exception $e) {
-	    if ($e->getCode() == 23000)
-	        $message = "This operation is not permitted due to an existing foreign key reference.";
-	    else
-	        $message = 'Invalid operation.';
-	    throw new CHttpException($e->getCode(), $message);
 	}
 }

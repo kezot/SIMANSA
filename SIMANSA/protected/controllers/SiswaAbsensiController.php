@@ -46,6 +46,8 @@ class SiswaAbsensiController extends Controller {
         $model = new SiswaAbsensi;
 
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'client-account-create-form') {
+            echo 'masuk';
+            return;
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
@@ -53,6 +55,7 @@ class SiswaAbsensiController extends Controller {
         if (isset($_POST['SiswaAbsensi'])) {
             //$model->TANGGAL = date('m/d/Y');
             $model->attributes = $_POST['SiswaAbsensi'];
+            $siswaTingkat = SiswaTingkat::model()->findByAttributes(array('NIS' => $model->NIS, 'KD_TAHUN_AJARAN' => $model->KD_TAHUN_AJARAN));
             if ($model->validate()) {
                 //$model->TANGGAL = date('Y-m-d', strtotime($model->TANGGAL));
                 //$this->saveModel($model);
@@ -96,7 +99,8 @@ class SiswaAbsensiController extends Controller {
         $kodeRombel = $siswaTingkat->KD_ROMBEL;
 
         $listAbsen = SiswaAbsensi::model()->findAllByAttributes(
-                array("KD_TINGKAT_KELAS" => $kodeTingkatKelas,
+                array("NIS" => $NIS,
+                    "KD_TINGKAT_KELAS" => $kodeTingkatKelas,
             "KD_PROGRAM_PENGAJARAN" => $kodeProgramPengajaran,
             "KD_ROMBEL" => $kodeRombel,
             "KD_TAHUN_AJARAN" => $tahunAjaran), array('order' => 'TANGGAL DESC'));
